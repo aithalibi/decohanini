@@ -1,0 +1,188 @@
+'use client';
+
+import { FormEvent, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Heart, Menu, Search, ShoppingBag, User, X } from 'lucide-react';
+import { useCartStore } from '@/store/cart-store';
+import { useFavoriteStore } from '@/store/favorite-store';
+import { useLanguageStore } from '@/store/language-store';
+import { translations } from '@/data/translations';
+import { localizeCategoryName } from '@/lib/catalog-i18n';
+import Logo from './Logo';
+
+type NavigationCategory = { id: number; name: string; slug: string };
+
+export default function Header({ categories = [] }: { categories?: NavigationCategory[] }) {
+  const router = useRouter();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [search, setSearch] = useState('');
+  const cartItems = useCartStore((state) => state.items);
+  const toggleCart = useCartStore((state) => state.toggleCart);
+  const favorites = useFavoriteStore((state) => state.favorites);
+  const language = useLanguageStore((state) => state.language);
+  const setLanguage = useLanguageStore((state) => state.setLanguage);
+  const t = translations[language];
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsMounted(true), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const totalCartCount = isMounted
+    ? cartItems.reduce((total, item) => total + item.quantity, 0)
+    : 0;
+  const favoritesCount = isMounted ? favorites.length : 0;
+
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = search.trim();
+    router.push(query ? `/boutique?recherche=${encodeURIComponent(query)}` : '/boutique');
+    setIsMobileMenuOpen(false);
+    setIsMobileSearchOpen(false);
+  };
+
+  const counter = (count: number) => count > 0 && (
+    <span className="absolute -right-2 -top-2 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-brand-caramel px-1 text-[9px] font-bold text-white">
+      {count}
+    </span>
+  );
+
+  return (
+    <header className="sticky top-0 z-40 w-full border-b border-brand-sand bg-brand-cream/95 backdrop-blur-lg md:relative">
+      <div className="grid h-[82px] grid-cols-[1fr_auto_1fr] items-center px-3 md:hidden">
+        <div className="flex items-center gap-0.5 justify-self-start">
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="grid h-10 w-10 place-items-center rounded-full text-brand-espresso transition-colors hover:bg-brand-sand/70"
+            aria-label={t.openMenu}
+          >
+            <Menu size={23} strokeWidth={1.7} />
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsMobileSearchOpen((open) => !open)}
+            className="grid h-10 w-10 place-items-center rounded-full text-brand-espresso transition-colors hover:bg-brand-sand/70"
+            aria-label="Rechercher"
+          >
+            <Search size={22} strokeWidth={1.7} />
+          </button>
+        </div>
+
+        <Link href="/" aria-label="Déco Hanini - Accueil" className="justify-self-center">
+          <Logo compact />
+        </Link>
+
+        <div className="flex items-center justify-self-end">
+          <Link href="/favoris" className="relative grid h-10 w-9 place-items-center text-brand-espresso" aria-label={t.favoris}>
+            <span className="relative"><Heart size={21} strokeWidth={1.7} />{counter(favoritesCount)}</span>
+          </Link>
+          <button
+            type="button"
+            onClick={() => toggleCart(true)}
+            className="relative grid h-10 w-9 place-items-center text-brand-espresso"
+            aria-label={t.panier}
+          >
+            <span className="relative"><ShoppingBag size={21} strokeWidth={1.7} />{counter(totalCartCount)}</span>
+          </button>
+        </div>
+      </div>
+
+      <form
+        onSubmit={handleSearch}
+        className={`overflow-hidden border-t border-brand-sand bg-brand-cream px-4 transition-[max-height,padding] duration-300 md:hidden ${
+          isMobileSearchOpen ? 'max-h-24 py-3' : 'max-h-0 py-0'
+        }`}
+      >
+        <div className="mx-auto flex max-w-lg overflow-hidden rounded-full border border-brand-taupe bg-white/80">
+          <input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            type="search"
+            placeholder={t.searchPlaceholder}
+            className="h-11 min-w-0 flex-1 bg-transparent px-5 text-sm text-brand-espresso outline-none placeholder:text-brand-gray-text"
+          />
+          <button type="submit" className="grid h-11 w-12 place-items-center bg-brand-espresso text-brand-cream" aria-label="Rechercher">
+            <Search size={18} />
+          </button>
+        </div>
+      </form>
+
+      <div className="container mx-auto hidden min-h-[96px] grid-cols-[230px_minmax(280px,1fr)_230px] items-center gap-8 px-5 md:grid lg:px-10">
+        <Link href="/" aria-label="Déco Hanini - Accueil" className="justify-self-start">
+          <Logo />
+        </Link>
+
+        <form onSubmit={handleSearch} className="flex w-full max-w-2xl justify-self-center overflow-hidden rounded-full border border-brand-taupe bg-white/75 shadow-[0_8px_25px_rgba(83,58,42,0.05)]">
+          <input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            type="search"
+            placeholder={t.searchPlaceholder}
+            className="h-12 min-w-0 flex-1 bg-transparent px-5 text-sm text-brand-espresso outline-none placeholder:text-brand-gray-text"
+          />
+          <button type="submit" className="grid h-12 w-14 place-items-center bg-brand-espresso text-brand-cream transition-colors hover:bg-brand-brown" aria-label="Rechercher">
+            <Search size={19} />
+          </button>
+        </form>
+
+        <div className="flex items-center justify-end gap-5">
+          <Link href="/account" className="flex flex-col items-center gap-1 text-brand-espresso transition-colors hover:text-brand-caramel">
+            <User size={22} strokeWidth={1.7} />
+            <span className="text-[10px]">{t.monCompte}</span>
+          </Link>
+          <Link href="/favoris" className="flex flex-col items-center gap-1 text-brand-espresso transition-colors hover:text-brand-caramel">
+            <span className="relative"><Heart size={22} strokeWidth={1.7} />{counter(favoritesCount)}</span>
+            <span className="text-[10px]">{t.favoris}</span>
+          </Link>
+          <button type="button" onClick={() => toggleCart(true)} className="flex flex-col items-center gap-1 text-brand-espresso transition-colors hover:text-brand-caramel">
+            <span className="relative"><ShoppingBag size={22} strokeWidth={1.7} />{counter(totalCartCount)}</span>
+            <span className="text-[10px]">{t.panier}</span>
+          </button>
+        </div>
+      </div>
+
+      <div
+        className={`fixed inset-0 z-50 bg-brand-espresso/55 transition-opacity md:hidden ${isMobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+      <aside
+        className={`fixed top-0 z-[60] h-dvh w-[min(88vw,360px)] overflow-y-auto bg-brand-cream p-5 shadow-2xl transition-transform duration-300 md:hidden ${
+          language === 'AR' ? 'right-0' : 'left-0'
+        } ${isMobileMenuOpen ? 'translate-x-0' : language === 'AR' ? 'translate-x-full' : '-translate-x-full'}`}
+      >
+        <div className="mb-5 flex items-center justify-between border-b border-brand-sand pb-5">
+          <Logo compact className="items-start" />
+          <button type="button" onClick={() => setIsMobileMenuOpen(false)} className="grid h-10 w-10 place-items-center rounded-full bg-brand-sand/60 text-brand-espresso" aria-label={t.closeMenu}>
+            <X size={21} />
+          </button>
+        </div>
+        <form onSubmit={handleSearch} className="mb-6 flex overflow-hidden rounded-full border border-brand-taupe bg-white/70">
+          <input value={search} onChange={(event) => setSearch(event.target.value)} type="search" placeholder={t.searchPlaceholder} className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm outline-none" />
+          <button type="submit" className="bg-brand-espresso px-4 text-brand-cream" aria-label="Rechercher"><Search size={18} /></button>
+        </form>
+        <nav className="flex flex-col text-[13px] font-semibold uppercase tracking-[0.08em] text-brand-espresso">
+          <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5">{t.accueil}</Link>
+          <Link href="/boutique" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5">{t.boutique}</Link>
+          <p className="pt-5 text-[10px] tracking-[0.2em] text-brand-caramel">{t.categories}</p>
+          {categories.map((category) => (
+            <Link key={category.id} href={`/categorie/${category.slug}`} onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand/70 py-3 font-normal normal-case tracking-normal text-brand-brown">
+              {localizeCategoryName(category.slug, category.name, language)}
+            </Link>
+          ))}
+          <Link href="/#about-section" onClick={() => setIsMobileMenuOpen(false)} className="mt-2 border-b border-brand-sand py-3.5">{t.aPropos}</Link>
+          <Link href="/#contact-section" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5">{t.contact}</Link>
+          <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5 text-brand-caramel">{t.monCompte}</Link>
+        </nav>
+        <div className="mt-6 flex items-center gap-2 text-xs font-bold">
+          <button type="button" onClick={() => setLanguage('FR')} className={language === 'FR' ? 'text-brand-caramel' : 'text-brand-gray-text'}>FR</button>
+          <span className="text-brand-taupe">|</span>
+          <button type="button" onClick={() => setLanguage('AR')} className={language === 'AR' ? 'text-brand-caramel' : 'text-brand-gray-text'}>AR</button>
+        </div>
+      </aside>
+    </header>
+  );
+}

@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String   @default("Administrateur")
+  email        String   @unique(map: "User_email_key")
+  passwordHash String
+  role         String   @default("CUSTOMER")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  orders       Order[]
+
+  @@map("user")
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String
+  slug        String    @unique(map: "Category_slug_key")
+  description String?   @db.Text
+  imageUrl    String?
+  isVisible   Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+
+  @@map("category")
+}
+
+model Product {
+  id               Int              @id @default(autoincrement())
+  name             String
+  slug             String           @unique(map: "Product_slug_key")
+  shortDescription String?          @db.VarChar(300)
+  description      String?          @db.Text
+  price            Decimal          @db.Decimal(10, 2)
+  oldPrice         Decimal?         @db.Decimal(10, 2)
+  stock            Int              @default(0)
+  isVisible        Boolean          @default(true)
+  isFeatured       Boolean          @default(false)
+  isNew            Boolean          @default(false)
+  isOnSale         Boolean          @default(false)
+  colors           Json?
+  dimensions       String?
+  categoryId       Int
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  category         Category         @relation(fields: [categoryId], references: [id], map: "Product_categoryId_fkey")
+  images           ProductImage[]
+  orderItems       OrderItem[]
+  variants         ProductVariant[]
+
+  @@index([categoryId], map: "Product_categoryId_fkey")
+  @@map("product")
+}
+
+model ProductVariant {
+  id         Int         @id @default(autoincrement())
+  name       String
+  price      Decimal     @db.Decimal(10, 2)
+  oldPrice   Decimal?    @db.Decimal(10, 2)
+  stock      Int         @default(0)
+  sortOrder  Int         @default(0)
+  productId  Int
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductVariant_productId_fkey")
+  orderItems OrderItem[]
+
+  @@index([productId], map: "ProductVariant_productId_fkey")
+  @@map("productvariant")
+}
+
+model ProductImage {
+  id        Int      @id @default(autoincrement())
+  url       String
+  publicId  String?
+  isMain    Boolean  @default(false)
+  sortOrder Int      @default(0)
+  productId Int
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade, map: "ProductImage_productId_fkey")
+
+  @@index([productId], map: "ProductImage_productId_fkey")
+  @@map("productimage")
+}
+
+model Order {
+  id            Int                  @id @default(autoincrement())
+  orderNumber   String               @unique(map: "Order_orderNumber_key")
+  customerName  String
+  phone         String
+  address       String?
+  city          String?
+  notes         String?              @db.Text
+  status        String               @default("NEW")
+  total         Decimal              @db.Decimal(10, 2)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  userId        Int?
+  user          User?                @relation(fields: [userId], references: [id], onDelete: SetNull, map: "Order_userId_fkey")
+  items         OrderItem[]
+  statusHistory OrderStatusHistory[]
+
+  @@index([userId], map: "Order_userId_fkey")
+  @@map("order")
+}
+
+model OrderItem {
+  id          Int             @id @default(autoincrement())
+  productName String
+  variantName String?
+  quantity    Int
+  unitPrice   Decimal         @db.Decimal(10, 2)
+  productId   Int?
+  variantId   Int?
+  orderId     Int
+  order       Order           @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "OrderItem_orderId_fkey")
+  product     Product?        @relation(fields: [productId], references: [id], map: "OrderItem_productId_fkey")
+  variant     ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull, map: "OrderItem_variantId_fkey")
+
+  @@index([orderId], map: "OrderItem_orderId_fkey")
+  @@index([productId], map: "OrderItem_productId_fkey")
+  @@index([variantId], map: "OrderItem_variantId_fkey")
+  @@map("orderitem")
+}
+
+model OrderStatusHistory {
+  id        Int      @id @default(autoincrement())
+  status    String
+  note      String?
+  orderId   Int
+  createdAt DateTime @default(now())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "OrderStatusHistory_orderId_fkey")
+
+  @@index([orderId], map: "OrderStatusHistory_orderId_fkey")
+  @@map("orderstatushistory")
+}
+
+model SiteSettings {
+  id             Int      @id @default(1)
+  storeName      String   @default("Déco Hanini")
+  whatsappNumber String   @default("212777422673")
+  phone          String?
+  email          String?
+  address        String?
+  heroTitle      String?  @db.VarChar(200)
+  heroSubtitle   String?  @db.VarChar(300)
+  heroImageUrl   String?
+  instagramUrl   String?
+  facebookUrl    String?
+  deliveryText   String?
+  paymentText    String?
+  updatedAt      DateTime @updatedAt
+
+  @@map("sitesettings")
+}

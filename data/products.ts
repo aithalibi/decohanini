@@ -1,0 +1,58 @@
+import { Product } from '../types/product';
+
+export const products: Product[] = [
+  {
+    id: '1',
+    slug: 'horloge-murale-diy',
+    name: 'Horloge murale DIY',
+    price: 199,
+    category: 'Tableaux',
+    image: '/images/products/horloge.png',
+    badge: 'Nouveau',
+  },
+  {
+    id: '2',
+    slug: 'pieces-echecs-decoratives',
+    name: 'Pièces d’échecs décoratives',
+    price: 450,
+    category: 'Décoration',
+    image: '/images/products/echecs.png',
+    badge: null,
+  },
+  {
+    id: '3',
+    slug: 'set-bols-ceramique',
+    name: 'Set de bols en céramique',
+    price: 299,
+    category: 'Assiettes',
+    image: '/images/products/bols.png',
+    badge: null,
+  },
+  {
+    id: '4',
+    slug: 'vases-pampas-dores',
+    name: 'Vases pampas dorés',
+    price: 249,
+    category: 'Décoration',
+    image: '/images/products/vases.png',
+    badge: null,
+  },
+  {
+    id: '5',
+    slug: 'pots-rangement',
+    name: 'Pots de rangement',
+    price: 179,
+    category: 'Bambou & Épices',
+    image: '/images/products/pots.png',
+    badge: null,
+  },
+  {
+    id: '6',
+    slug: 'chaise-pliante-premium',
+    name: 'Chaise pliante premium',
+    price: 350,
+    category: 'Chaises & Extérieur',
+    image: '/images/products/chaise.png',
+    badge: 'Nouveau',
+  },
+];
