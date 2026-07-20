@@ -9,6 +9,24 @@ const { loadEnvConfig } = nextEnv;
 const projectRoot = process.cwd();
 const migrationsDirectory = path.join(projectRoot, 'prisma', 'migrations');
 
+const legacyTableNames = new Map([
+  ['User', 'user'],
+  ['Category', 'category'],
+  ['Product', 'product'],
+  ['ProductImage', 'productimage'],
+  ['Order', 'order'],
+  ['OrderItem', 'orderitem'],
+  ['OrderStatusHistory', 'orderstatushistory'],
+  ['SiteSettings', 'sitesettings'],
+]);
+
+const recoverableSchemaErrors = new Set([
+  'ER_TABLE_EXISTS_ERROR',
+  'ER_DUP_FIELDNAME',
+  'ER_DUP_KEYNAME',
+  'ER_FK_DUP_NAME',
+]);
+
 loadEnvConfig(projectRoot);
 
 function connectionOptions(databaseUrl) {
@@ -75,9 +93,54 @@ async function ensureMigrationTable(connection) {
   `);
 }
 
+async function normalizeLegacyTableNames(connection) {
+  const [rows] = await connection.query(`
+    SELECT \`TABLE_NAME\` AS \`tableName\`
+    FROM \`information_schema\`.\`TABLES\`
+    WHERE \`TABLE_SCHEMA\` = DATABASE()
+  `);
+  const existingNames = new Set(rows.map((row) => row.tableName));
+  const renames = [];
+
+  for (const [legacyName, currentName] of legacyTableNames) {
+    if (existingNames.has(legacyName) && !existingNames.has(currentName)) {
+      renames.push(`\`${legacyName}\` TO \`${currentName}\``);
+    }
+  }
+
+  if (renames.length === 0) return;
+
+  await connection.query(`RENAME TABLE ${renames.join(', ')}`);
+  console.log(`Normalized legacy table names: ${renames.join(', ')}.`);
+}
+
+function migrationStatements(sql) {
+  return sql
+    .split(';')
+    .map((statement) => statement.replace(/^\s*--.*$/gm, '').trim())
+    .filter(Boolean);
+}
+
+async function executeMigration(connection, migration) {
+  const statements = migrationStatements(migration.sql);
+  let appliedSteps = 0;
+
+  for (const statement of statements) {
+    try {
+      await connection.query(statement);
+    } catch (error) {
+      if (!recoverableSchemaErrors.has(error?.code)) throw error;
+      console.warn(`Schema element already exists while resuming ${migration.name}; continuing.`);
+    }
+    appliedSteps += 1;
+  }
+
+  return appliedSteps;
+}
+
 async function applyMigrations(connection, migrations) {
   const [rows] = await connection.query(`
-    SELECT \`migration_name\`, \`checksum\`, \`finished_at\`, \`rolled_back_at\`
+    SELECT \`id\`, \`migration_name\`, \`checksum\`, \`finished_at\`, \`rolled_back_at\`
     FROM \`_prisma_migrations\`
     ORDER BY \`started_at\` ASC
   `);
@@ -95,7 +158,15 @@ async function applyMigrations(connection, migrations) {
     }
 
     if (applied && !applied.rolled_back_at) {
-      throw new Error(`Migration ${migration.name} has a previous unfinished attempt.`);
+      if (applied.checksum !== migration.checksum) {
+        throw new Error(`Migration ${migration.name} changed after an unfinished attempt.`);
+      }
+
+      console.warn(`Resuming migration after an unfinished attempt: ${migration.name}`);
+      await connection.execute(
+        'UPDATE `_prisma_migrations` SET `rolled_back_at` = CURRENT_TIMESTAMP(3) WHERE `id` = ?',
+        [applied.id]
+      );
     }
 
     const migrationId = randomUUID();
@@ -106,10 +177,10 @@ async function applyMigrations(connection, migrations) {
 
     try {
       console.log(`Applying migration: ${migration.name}`);
-      await connection.query(migration.sql);
+      const appliedSteps = await executeMigration(connection, migration);
       await connection.execute(
-        'UPDATE `_prisma_migrations` SET `finished_at` = CURRENT_TIMESTAMP(3), `applied_steps_count` = 1 WHERE `id` = ?',
-        [migrationId]
+        'UPDATE `_prisma_migrations` SET `finished_at` = CURRENT_TIMESTAMP(3), `applied_steps_count` = ? WHERE `id` = ?',
+        [appliedSteps, migrationId]
       );
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -134,6 +205,7 @@ async function main() {
 
   try {
     await ensureMigrationTable(connection);
+    await normalizeLegacyTableNames(connection);
     await applyMigrations(connection, migrations);
     console.log('Database migrations are up to date.');
   } finally {
