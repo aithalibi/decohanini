@@ -24,6 +24,10 @@ if (databaseUrl && !databaseUrl.startsWith('mysql://')) {
   errors.push('DATABASE_URL must use the mysql:// protocol.');
 }
 
+if (databaseUrl && /DB_(USER|PASSWORD|HOST|NAME)|replace|example/i.test(databaseUrl)) {
+  errors.push('DATABASE_URL still contains example values. Use the real Hostinger MySQL credentials.');
+}
+
 if (authSecret && (authSecret.length < 32 || /replace|change/i.test(authSecret))) {
   errors.push('AUTH_SECRET must be a real random secret of at least 32 characters.');
 }
