@@ -78,7 +78,7 @@ refuse volontairement les mots de passe faibles et les valeurs d'exemple.
 
 1. Validation des variables de production.
 2. Generation du client Prisma.
-3. Application des migrations MySQL avec `prisma migrate deploy`.
+3. Application des migrations MySQL avec un Schema Engine Prisma rendu executable dans le dossier temporaire de build.
 4. Creation ou mise a jour du compte administrateur defini dans hPanel.
 5. Import du snapshot uniquement si aucun produit n'existe deja.
 6. Build Next.js de production.

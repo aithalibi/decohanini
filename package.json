@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "postinstall": "prisma generate",
     "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate deploy",
+    "db:migrate": "node scripts/run-prisma-migrate.mjs",
     "db:bootstrap-admin": "node scripts/bootstrap-admin.mjs",
     "db:export-catalog": "node scripts/export-catalog.mjs",
     "db:import-catalog": "node scripts/import-catalog.mjs",
