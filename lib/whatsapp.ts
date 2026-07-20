@@ -1,7 +1,7 @@
 import { CartItem } from '../types/cart';
 
 export function getWhatsAppCheckoutUrl(items: CartItem[]): string {
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212777422673';
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212714516493';
   
   // Format the message
   let message = 'Bonjour Déco Hanini,\n\n';
@@ -22,7 +22,7 @@ export function getWhatsAppCheckoutUrl(items: CartItem[]): string {
 }
 
 export function getDirectWhatsAppContactUrl(): string {
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212777422673';
+  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '212714516493';
   const message = 'Bonjour Déco Hanini, je souhaiterais avoir des informations concernant vos produits.';
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }

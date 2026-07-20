@@ -40,7 +40,7 @@ export default function ProductDetails({ product, images, description, dimension
   const isOutOfStock = availableStock <= 0;
   const isPriceOnRequest = activePrice <= 0;
   const whatsappMessage = isArabic ? `السلام عليكم، أريد معرفة ثمن ${localizedName}.` : `Bonjour, je souhaite connaître le prix de ${localizedName}.`;
-  const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, '') || '212777422673'}?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, '') || '212714516493'}?text=${encodeURIComponent(whatsappMessage)}`;
 
   const addToCart = () => {
     if (isOutOfStock) return;

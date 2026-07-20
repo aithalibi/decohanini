@@ -20,7 +20,7 @@ export default function Footer({ settings }: { settings: FooterSettings }) {
   const language = useLanguageStore((state) => state.language);
   const t = translations[language];
   const isArabic = language === 'AR';
-  const whatsappNumber = settings.whatsappNumber.replace(/\D/g, '') || '212777422673';
+  const whatsappNumber = settings.whatsappNumber.replace(/\D/g, '') || '212714516493';
   const displayPhone = settings.phone || whatsappNumber.replace(/^212/, '0');
   const whatsappUrl = `https://wa.me/${whatsappNumber}`;
   const headingClass = 'mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D8B47A]';

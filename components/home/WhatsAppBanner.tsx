@@ -9,7 +9,7 @@ import { translations } from '@/data/translations';
 export default function WhatsAppBanner({ settings }: { settings?: SiteSettings }) {
   const language = useLanguageStore((state) => state.language);
   const t = translations[language];
-  const whatsappUrl = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '') || '212777422673'}`;
+  const whatsappUrl = `https://wa.me/${settings?.whatsappNumber?.replace(/[^0-9]/g, '') || '212714516493'}`;
   const phone = settings?.whatsappNumber ? settings.whatsappNumber.replace(/^212/, '0').replace(/(\d{4})(\d{6})/, '$1 $2') : '0777 422673';
 
   return (

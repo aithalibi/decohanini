@@ -60,7 +60,7 @@ AUTH_SECRET=une-valeur-aleatoire-de-32-caracteres-minimum
 NEXTAUTH_URL=https://votre-domaine.ma
 ADMIN_EMAIL=admin
 ADMIN_PASSWORD=un-mot-de-passe-fort-et-unique
-NEXT_PUBLIC_WHATSAPP_NUMBER=212777422673
+NEXT_PUBLIC_WHATSAPP_NUMBER=212714516493
 UPLOAD_DIR=/home/UTILISATEUR/domains/votre-domaine.ma/persistent-uploads
 NEXT_PUBLIC_UPLOAD_URL=/media
 ```

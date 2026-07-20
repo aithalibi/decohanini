@@ -9,7 +9,7 @@ async function main() {
     create: {
       id: 1,
       storeName: 'Déco Hanini',
-      whatsappNumber: '212777422673',
+      whatsappNumber: '212714516493',
       heroTitle: "L'élégance dans chaque détail",
       heroSubtitle: 'Découvrez notre sélection unique de décoration pour un intérieur qui vous ressemble.',
       heroImageUrl: '/images/hero/hero-panorama-v2.png',

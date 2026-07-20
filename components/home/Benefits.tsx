@@ -11,7 +11,7 @@ export default function Benefits() {
     { icon: Truck, title: t.deliveryTitle, description: t.deliveryDesc },
     { icon: Wallet, title: t.paymentTitle, description: t.paymentDesc },
     { icon: Award, title: t.qualityTitle, description: t.qualityDesc },
-    { icon: Phone, title: t.supportTitle, description: '07 77 42 26 73' },
+    { icon: Phone, title: t.supportTitle, description: '07 14 51 64 93' },
   ];
 
   return (

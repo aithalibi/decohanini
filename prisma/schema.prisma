@@ -148,7 +148,7 @@ model OrderStatusHistory {
 model SiteSettings {
   id             Int      @id @default(1)
   storeName      String   @default("Déco Hanini")
-  whatsappNumber String   @default("212777422673")
+  whatsappNumber String   @default("212714516493")
   phone          String?
   email          String?
   address        String?

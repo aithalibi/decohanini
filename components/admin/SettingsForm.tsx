@@ -55,7 +55,7 @@ export default function SettingsForm({ action, settings }: SettingsFormProps) {
               type="text"
               required
               defaultValue={settings.whatsappNumber}
-              placeholder="Ex: 212777422673"
+              placeholder="Ex: 212714516493"
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#E52329]"
             />
             <p className="text-xs text-gray-400 mt-1">{isArabic ? 'الصيغة الدولية بدون + (مثال: 212...)' : 'Format international sans le + (ex: 212...)'}</p>

@@ -9,7 +9,7 @@ export async function getSettings() {
   let settings = await prisma.siteSettings.findUnique({ where: { id: 1 } });
   if (!settings) {
     settings = await prisma.siteSettings.create({
-      data: { id: 1, storeName: 'Déco Hanini', whatsappNumber: '212777422673' },
+      data: { id: 1, storeName: 'Déco Hanini', whatsappNumber: '212714516493' },
     });
   }
   return settings;

@@ -1,7 +1,7 @@
 import { MessageCircle } from 'lucide-react';
 
 export default function FloatingWhatsApp({ phone }: { phone: string }) {
-  const whatsappNumber = phone.replace(/\D/g, '') || '212777422673';
+  const whatsappNumber = phone.replace(/\D/g, '') || '212714516493';
 
   return (
     <a
