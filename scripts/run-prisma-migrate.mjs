@@ -116,8 +116,9 @@ async function normalizeLegacyTableNames(connection) {
 
 function migrationStatements(sql) {
   return sql
+    .replace(/^\s*--.*$/gm, '')
     .split(';')
-    .map((statement) => statement.replace(/^\s*--.*$/gm, '').trim())
+    .map((statement) => statement.trim())
     .filter(Boolean);
 }
 
