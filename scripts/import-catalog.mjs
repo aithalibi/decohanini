@@ -2,11 +2,16 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import nextEnv from '@next/env';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { normalizeMysqlDatabaseUrl } from '../lib/database-url.js';
 
 const { loadEnvConfig } = nextEnv;
 loadEnvConfig(process.cwd());
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: { url: normalizeMysqlDatabaseUrl(process.env.DATABASE_URL) },
+  },
+});
 const snapshotPath = path.resolve(process.cwd(), 'prisma', 'catalog.snapshot.json');
 const onlyIfEmpty = process.argv.includes('--if-empty');
 const force = process.argv.includes('--force');

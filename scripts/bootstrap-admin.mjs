@@ -1,6 +1,7 @@
 import nextEnv from '@next/env';
 import bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
+import { normalizeMysqlDatabaseUrl } from '../lib/database-url.js';
 
 const { loadEnvConfig } = nextEnv;
 loadEnvConfig(process.cwd());
@@ -16,7 +17,11 @@ if (password.length < 10 || /^(admin|password|123456)$/i.test(password)) {
   throw new Error('ADMIN_PASSWORD must contain at least 10 characters and must not be a default password.');
 }
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: { url: normalizeMysqlDatabaseUrl(process.env.DATABASE_URL) },
+  },
+});
 
 try {
   const passwordHash = await bcrypt.hash(password, 12);

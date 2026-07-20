@@ -3,6 +3,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import nextEnv from '@next/env';
 import mysql from 'mysql2/promise';
+import { normalizeMysqlDatabaseUrl } from '../lib/database-url.js';
 
 const { loadEnvConfig } = nextEnv;
 const projectRoot = process.cwd();
@@ -14,7 +15,7 @@ function connectionOptions(databaseUrl) {
   let parsedUrl;
 
   try {
-    parsedUrl = new URL(databaseUrl);
+    parsedUrl = new URL(normalizeMysqlDatabaseUrl(databaseUrl));
   } catch {
     throw new Error('DATABASE_URL must be a valid MySQL connection URL.');
   }
