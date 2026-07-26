@@ -6,10 +6,14 @@ loadEnvConfig(process.cwd());
 
 const errors = [];
 
+function clean(value) {
+  return (value ?? '').trim().replace(/^(['"])(.*)\1$/, '$2');
+}
+
 function required(name) {
-  const value = process.env[name]?.trim();
+  const value = clean(process.env[name]);
   if (!value) errors.push(`${name} is required.`);
-  return value ?? '';
+  return value;
 }
 
 const databaseUrl = required('DATABASE_URL');
