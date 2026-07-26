@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
-import Image from 'next/image';
+import React, { useEffect, useState, useRef } from 'react';
 import { Upload, X, ImageIcon } from 'lucide-react';
 import { useLanguageStore } from '@/store/language-store';
 
@@ -25,30 +24,31 @@ export default function ImageUploader({
   const language = useLanguageStore((state) => state.language);
   const isArabic = language === 'AR';
 
+  useEffect(() => {
+    setPreview(currentUrl || '');
+  }, [currentUrl]);
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Client-side validation
     const ALLOWED = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
     if (!ALLOWED.includes(file.type)) {
-      setError(isArabic ? 'صيغة غير مقبولة. استعمل JPG أو PNG أو WebP.' : 'Format non accepté. Utilisez JPG, PNG ou WebP.');
+      setError(isArabic ? 'ØµÙŠØºØ© ØºÙŠØ± Ù…Ù‚Ø¨ÙˆÙ„Ø©. Ø§Ø³ØªØ¹Ù…Ù„ JPG Ø£Ùˆ PNG Ø£Ùˆ WebP.' : 'Format non acceptÃ©. Utilisez JPG, PNG ou WebP.');
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      setError(isArabic ? 'حجم الصورة كبير جداً. الحد الأقصى 5 ميغابايت.' : "L'image est trop lourde. Maximum 5 Mo.");
+      setError(isArabic ? 'Ø­Ø¬Ù… Ø§Ù„ØµÙˆØ±Ø© ÙƒØ¨ÙŠØ± Ø¬Ø¯Ø§Ù‹. Ø§Ù„Ø­Ø¯ Ø§Ù„Ø£Ù‚ØµÙ‰ 5 Ù…ÙŠØºØ§Ø¨Ø§ÙŠØª.' : "L'image est trop lourde. Maximum 5 Mo.");
       return;
     }
 
     setError('');
     setIsUploading(true);
 
-    // Preview optimiste
     const reader = new FileReader();
     reader.onload = (ev) => setPreview(ev.target?.result as string);
     reader.readAsDataURL(file);
 
-    // Upload
     const fd = new FormData();
     fd.append('file', file);
 
@@ -58,7 +58,7 @@ export default function ImageUploader({
     setIsUploading(false);
 
     if (!res.ok) {
-      setError(data.error || (isArabic ? 'حدث خطأ أثناء رفع الصورة.' : 'Une erreur est survenue lors de l\'upload.'));
+      setError(data.error || (isArabic ? 'Ø­Ø¯Ø« Ø®Ø·Ø£ Ø£Ø«Ù†Ø§Ø¡ Ø±ÙØ¹ Ø§Ù„ØµÙˆØ±Ø©.' : 'Une erreur est survenue lors de l\'upload.'));
       setPreview(currentUrl || '');
       return;
     }
@@ -75,33 +75,26 @@ export default function ImageUploader({
 
   return (
     <div>
-      {label && <label className="block text-sm font-semibold text-gray-700 mb-2">{isArabic && label === 'Image' ? 'الصورة' : label}</label>}
+      {label && <label className="mb-2 block text-sm font-semibold text-gray-700">{isArabic && label === 'Image' ? 'Ø§Ù„ØµÙˆØ±Ø©' : label}</label>}
 
-      {/* Hidden form field for the URL */}
       <input type="hidden" name={name} value={preview} />
 
       {preview ? (
-        <div className="relative w-full aspect-square max-w-[200px] rounded-xl overflow-hidden border border-gray-200 group">
-          <Image
-            src={preview}
-            alt={isArabic ? 'معاينة' : 'Aperçu'}
-            fill
-            className="object-cover"
-            sizes="200px"
-          />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+        <div className="group relative aspect-square w-full max-w-[200px] overflow-hidden rounded-xl border border-gray-200">
+          <img src={preview} alt={isArabic ? 'Ù…Ø¹Ø§ÙŠÙ†Ø©' : 'AperÃ§u'} className="h-full w-full object-cover" />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30">
             <button
               type="button"
               onClick={handleRemove}
-              className="opacity-0 group-hover:opacity-100 transition-opacity w-9 h-9 bg-red-500 rounded-full flex items-center justify-center text-white cursor-pointer"
-              aria-label={isArabic ? 'حذف الصورة' : "Supprimer l'image"}
+              className="grid h-9 w-9 place-items-center rounded-full bg-red-500 text-white opacity-0 transition-opacity group-hover:opacity-100"
+              aria-label={isArabic ? 'Ø­Ø°Ù Ø§Ù„ØµÙˆØ±Ø©' : "Supprimer l'image"}
             >
               <X size={18} />
             </button>
           </div>
           {isUploading && (
-            <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
-              <span className="w-8 h-8 border-2 border-[#E52329]/30 border-t-[#E52329] rounded-full animate-spin" />
+            <div className="absolute inset-0 flex items-center justify-center bg-white/80">
+              <span className="h-8 w-8 animate-spin rounded-full border-2 border-[#E52329]/30 border-t-[#E52329]" />
             </div>
           )}
         </div>
@@ -110,16 +103,16 @@ export default function ImageUploader({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={isUploading}
-          className="w-full max-w-[200px] aspect-square border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center gap-2 text-gray-400 hover:border-[#E52329] hover:text-[#E52329] transition-colors cursor-pointer disabled:opacity-50"
+          className="flex aspect-square w-full max-w-[200px] flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 text-center text-gray-400 transition-colors hover:border-[#E52329] hover:text-[#E52329] disabled:opacity-50"
         >
           {isUploading ? (
-            <span className="w-8 h-8 border-2 border-[#E52329]/30 border-t-[#E52329] rounded-full animate-spin" />
+            <span className="h-8 w-8 animate-spin rounded-full border-2 border-[#E52329]/30 border-t-[#E52329]" />
           ) : (
             <>
               <ImageIcon size={28} />
-              <div className="text-center px-2">
-                <p className="text-xs font-medium">{isArabic ? 'اختر صورة' : 'Choisir une image'}</p>
-                <p className="text-[10px] mt-0.5">JPG, PNG, WebP · Max 5 Mo</p>
+              <div className="px-2 text-center">
+                <p className="text-xs font-medium">{isArabic ? 'Ø§Ø®ØªØ± ØµÙˆØ±Ø©' : 'Choisir une image'}</p>
+                <p className="mt-0.5 text-[10px]">JPG, PNG, WebP · Max 5 Mo</p>
               </div>
               <Upload size={16} />
             </>
@@ -139,13 +132,13 @@ export default function ImageUploader({
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="mt-2 text-xs text-[#E52329] hover:underline cursor-pointer"
+          className="mt-2 cursor-pointer text-xs text-[#E52329] hover:underline"
         >
-          {isArabic ? 'اختر من الحاسوب أو الهاتف' : "Choisir depuis l'ordinateur ou le téléphone"}
+          {isArabic ? 'Ø§Ø®ØªØ± Ù…Ù† Ø§Ù„Ø­Ø§Ø³ÙˆØ¨ Ø£Ùˆ Ø§Ù„Ù‡Ø§ØªÙ' : "Choisir depuis l'ordinateur ou le téléphone"}
         </button>
       )}
 
-      {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
+      {error && <p className="mt-2 text-xs text-red-500">{error}</p>}
     </div>
   );
 }

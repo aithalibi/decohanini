@@ -1,7 +1,6 @@
 import React from 'react';
 import { Package, Tag, ShoppingCart, AlertTriangle, Plus, Eye } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { getDashboardStats } from '@/actions/orders';
 import DashboardCard from '@/components/admin/DashboardCard';
 import OrderStatusBadge from '@/components/admin/OrderStatusBadge';
@@ -147,13 +146,7 @@ export default async function AdminDashboardPage() {
                   <div key={p.id} className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 relative">
                       {p.images[0] ? (
-                        <Image
-                          src={p.images[0].url}
-                          alt={p.name}
-                          fill
-                          className="object-cover"
-                          sizes="40px"
-                        />
+                        <img src={p.images[0].url} alt={p.name} className="h-full w-full object-cover brightness-110 contrast-105 saturate-110" />
                       ) : (
                         <Package size={18} className="text-gray-300 m-auto mt-1.5" />
                       )}

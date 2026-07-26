@@ -4,7 +4,7 @@ import Hero from './Hero';
 import Benefits from './Benefits';
 import Categories from './Categories';
 import ProductSection from './ProductSection';
-import WhatsAppBanner from './WhatsAppBanner';
+import CollectionSection from './CollectionSection';
 import type { SiteSettings, Category as PrismaCategory } from '@prisma/client';
 import type { Product, Category } from '@/types/product';
 
@@ -15,6 +15,19 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ settings, categories, products }: HomeClientProps) {
+  const showcaseImages = [
+    '/images/hero/hero-home-screen-v2.png',
+    '/lookbook/lookbook-01.jpeg',
+    '/lookbook/lookbook-02.jpeg',
+    '/lookbook/lookbook-03.jpeg',
+    '/lookbook/lookbook-04.jpeg',
+    '/lookbook/lookbook-05.jpeg',
+    '/lookbook/lookbook-06.jpeg',
+    '/lookbook/lookbook-07.jpeg',
+    '/lookbook/lookbook-08.jpeg',
+    '/lookbook/lookbook-09.jpeg',
+  ];
+
   const mappedCategories: Category[] = (categories ?? []).map((category) => ({
     id: String(category.id),
     name: category.name,
@@ -24,11 +37,11 @@ export default function HomeClient({ settings, categories, products }: HomeClien
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-brand-white">
-      <Hero settings={settings} />
+      <Hero settings={settings} showcaseImages={showcaseImages.slice(0, 1)} />
       <Benefits />
       <Categories categories={mappedCategories} />
       <ProductSection products={products} />
-      <WhatsAppBanner settings={settings} />
+      <CollectionSection />
     </div>
   );
 }

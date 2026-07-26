@@ -1,5 +1,4 @@
 import Header from '@/components/layout/Header';
-import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/cart/CartDrawer';
 import LanguageProvider from '@/components/layout/LanguageProvider';
@@ -27,9 +26,8 @@ export default async function StoreLayout({ children }: { children: React.ReactN
 
   return (
     <LanguageProvider>
-      <div className="mx-auto flex min-h-screen w-full max-w-[1480px] flex-col bg-brand-white shadow-[0_0_55px_rgba(45,34,27,0.12)]">
+      <div className="flex min-h-screen w-full flex-col bg-[linear-gradient(180deg,#fffdfa_0%,#fbf7f0_42%,#f4ecdf_100%)]">
         <Header categories={navigationCategories} />
-        <Navbar categories={navigationCategories} />
         <main className="flex-1">{children}</main>
         <Footer settings={footerSettings} />
         <CartDrawer />

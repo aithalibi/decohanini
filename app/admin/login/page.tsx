@@ -78,7 +78,14 @@ export default function AdminLoginPage() {
     <div className="warm-speckle relative flex min-h-screen items-center justify-center p-4" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'fr'}>
       <div className="absolute right-4 top-4"><AdminLanguageSwitch /></div>
       <div className="w-full max-w-md">
-        <Link href="/" className="mb-8 flex justify-center" aria-label={copy.back}><Logo /></Link>
+        <div className="mb-8 flex items-center justify-between gap-3">
+          <Link href="/" className="inline-flex items-center rounded-full border border-brand-sand bg-brand-white px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-brand-brown transition-colors hover:bg-brand-sand/70" aria-label={copy.back}>
+            {copy.back}
+          </Link>
+          <Link href="/" className="flex justify-center" aria-label={copy.back}>
+            <Logo />
+          </Link>
+        </div>
         <div className="rounded-[28px] border border-brand-sand bg-brand-white p-6 shadow-[0_20px_60px_rgba(68,47,35,0.12)] sm:p-8">
           <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-caramel">{copy.reserved}</p>
           <h1 className="mt-2 font-serif text-3xl text-brand-espresso">{copy.title}</h1>

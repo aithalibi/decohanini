@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Heart, Menu, Search, ShoppingBag, User, X } from 'lucide-react';
+import { ChevronDown, Heart, Menu, Search, ShoppingBag, User, X } from 'lucide-react';
 import { useCartStore } from '@/store/cart-store';
 import { useFavoriteStore } from '@/store/favorite-store';
 import { useLanguageStore } from '@/store/language-store';
@@ -16,7 +16,6 @@ type NavigationCategory = { id: number; name: string; slug: string };
 export default function Header({ categories = [] }: { categories?: NavigationCategory[] }) {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [search, setSearch] = useState('');
   const cartItems = useCartStore((state) => state.items);
@@ -31,9 +30,7 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
     return () => window.clearTimeout(timer);
   }, []);
 
-  const totalCartCount = isMounted
-    ? cartItems.reduce((total, item) => total + item.quantity, 0)
-    : 0;
+  const totalCartCount = isMounted ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
   const favoritesCount = isMounted ? favorites.length : 0;
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
@@ -41,19 +38,36 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
     const query = search.trim();
     router.push(query ? `/boutique?recherche=${encodeURIComponent(query)}` : '/boutique');
     setIsMobileMenuOpen(false);
-    setIsMobileSearchOpen(false);
   };
 
-  const counter = (count: number) => count > 0 && (
-    <span className="absolute -right-2 -top-2 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-brand-caramel px-1 text-[9px] font-bold text-white">
-      {count}
-    </span>
-  );
+  const counter = (count: number) =>
+    count > 0 && (
+      <span className="absolute -right-2 -top-2 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-brand-caramel px-1 text-[9px] font-bold text-white">
+        {count}
+      </span>
+    );
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-brand-sand bg-brand-cream/95 backdrop-blur-lg md:relative">
-      <div className="grid h-[82px] grid-cols-[1fr_auto_1fr] items-center px-3 md:hidden">
-        <div className="flex items-center gap-0.5 justify-self-start">
+    <header className="sticky top-0 z-40 w-full border-b border-brand-sand bg-brand-cream/96 backdrop-blur-xl">
+      <div className="overflow-hidden border-b border-brand-sand/80 bg-brand-espresso text-brand-cream">
+        <div className="mx-auto w-full max-w-[1400px] px-4 lg:px-10">
+          <div className="overflow-hidden py-2 text-[10px] font-semibold uppercase tracking-[0.18em]">
+            <div className="animate-marquee-left flex w-max items-center gap-2 whitespace-nowrap will-change-transform">
+              <span className="shrink-0 text-brand-sand/70">Décoration Hanini</span>
+              <span className="shrink-0 text-brand-cream/90">· Livraison partout au Maroc</span>
+              <span className="shrink-0 text-brand-cream/90">· Paiement à la livraison</span>
+              <span className="shrink-0 text-brand-cream/90">· Produits premium</span>
+              <span className="shrink-0 text-brand-sand/70">Décoration Hanini</span>
+              <span className="shrink-0 text-brand-cream/90">· Livraison partout au Maroc</span>
+              <span className="shrink-0 text-brand-cream/90">· Paiement à la livraison</span>
+              <span className="shrink-0 text-brand-cream/90">· Produits premium</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid h-[82px] grid-cols-[1fr_auto_1fr] items-center px-4 md:hidden">
+        <div className="flex items-center justify-self-start">
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
@@ -62,14 +76,6 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
           >
             <Menu size={23} strokeWidth={1.7} />
           </button>
-          <button
-            type="button"
-            onClick={() => setIsMobileSearchOpen((open) => !open)}
-            className="grid h-10 w-10 place-items-center rounded-full text-brand-espresso transition-colors hover:bg-brand-sand/70"
-            aria-label="Rechercher"
-          >
-            <Search size={22} strokeWidth={1.7} />
-          </button>
         </div>
 
         <Link href="/" aria-label="Déco Hanini - Accueil" className="justify-self-center">
@@ -77,69 +83,143 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
         </Link>
 
         <div className="flex items-center justify-self-end">
-          <Link href="/favoris" className="relative grid h-10 w-9 place-items-center text-brand-espresso" aria-label={t.favoris}>
-            <span className="relative"><Heart size={21} strokeWidth={1.7} />{counter(favoritesCount)}</span>
+          <div className="mr-2 flex items-center rounded-full border border-brand-sand bg-white/85 p-0.5 text-[10px] font-bold uppercase tracking-[0.14em] shadow-[0_8px_20px_rgba(83,58,42,0.05)]">
+            <button
+              type="button"
+              onClick={() => setLanguage('FR')}
+              className={`rounded-full px-2.5 py-1.5 transition-colors ${
+                language === 'FR' ? 'bg-brand-brown text-brand-cream' : 'text-brand-gray-text hover:text-brand-brown'
+              }`}
+              aria-pressed={language === 'FR'}
+              aria-label="Français"
+            >
+              FR
+            </button>
+            <button
+              type="button"
+              onClick={() => setLanguage('AR')}
+              className={`rounded-full px-2.5 py-1.5 transition-colors ${
+                language === 'AR' ? 'bg-brand-brown text-brand-cream' : 'text-brand-gray-text hover:text-brand-brown'
+              }`}
+              aria-pressed={language === 'AR'}
+              aria-label="العربية"
+            >
+              AR
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => router.push('/boutique')}
+            className="grid h-10 w-10 place-items-center rounded-full text-brand-espresso transition-colors hover:bg-brand-sand/70"
+            aria-label="Rechercher"
+          >
+            <Search size={21} strokeWidth={1.7} />
+          </button>
+          <Link href="/favoris" className="relative grid h-10 w-10 place-items-center text-brand-espresso" aria-label={t.favoris}>
+            <span className="relative">
+              <Heart size={21} strokeWidth={1.7} />
+              {counter(favoritesCount)}
+            </span>
           </Link>
           <button
             type="button"
             onClick={() => toggleCart(true)}
-            className="relative grid h-10 w-9 place-items-center text-brand-espresso"
+            className="relative grid h-10 w-10 place-items-center text-brand-espresso"
             aria-label={t.panier}
           >
-            <span className="relative"><ShoppingBag size={21} strokeWidth={1.7} />{counter(totalCartCount)}</span>
+            <span className="relative">
+              <ShoppingBag size={21} strokeWidth={1.7} />
+              {counter(totalCartCount)}
+            </span>
           </button>
         </div>
       </div>
 
-      <form
-        onSubmit={handleSearch}
-        className={`overflow-hidden border-t border-brand-sand bg-brand-cream px-4 transition-[max-height,padding] duration-300 md:hidden ${
-          isMobileSearchOpen ? 'max-h-24 py-3' : 'max-h-0 py-0'
-        }`}
-      >
-        <div className="mx-auto flex max-w-lg overflow-hidden rounded-full border border-brand-taupe bg-white/80">
-          <input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            type="search"
-            placeholder={t.searchPlaceholder}
-            className="h-11 min-w-0 flex-1 bg-transparent px-5 text-sm text-brand-espresso outline-none placeholder:text-brand-gray-text"
-          />
-          <button type="submit" className="grid h-11 w-12 place-items-center bg-brand-espresso text-brand-cream" aria-label="Rechercher">
-            <Search size={18} />
-          </button>
-        </div>
-      </form>
-
-      <div className="container mx-auto hidden min-h-[96px] grid-cols-[230px_minmax(280px,1fr)_230px] items-center gap-8 px-5 md:grid lg:px-10">
+      <div className="mx-auto hidden w-full max-w-[1400px] grid-cols-[220px_minmax(260px,1fr)_250px] items-center gap-6 px-5 py-4 lg:grid lg:px-10">
         <Link href="/" aria-label="Déco Hanini - Accueil" className="justify-self-start">
           <Logo />
         </Link>
 
-        <form onSubmit={handleSearch} className="flex w-full max-w-2xl justify-self-center overflow-hidden rounded-full border border-brand-taupe bg-white/75 shadow-[0_8px_25px_rgba(83,58,42,0.05)]">
-          <input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            type="search"
-            placeholder={t.searchPlaceholder}
-            className="h-12 min-w-0 flex-1 bg-transparent px-5 text-sm text-brand-espresso outline-none placeholder:text-brand-gray-text"
-          />
-          <button type="submit" className="grid h-12 w-14 place-items-center bg-brand-espresso text-brand-cream transition-colors hover:bg-brand-brown" aria-label="Rechercher">
-            <Search size={19} />
-          </button>
-        </form>
+        <div className="flex w-full flex-col items-center gap-3 justify-self-center">
+          <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-espresso">
+            <Link href="/" className="transition-colors hover:text-brand-caramel">
+              {t.accueil}
+            </Link>
+            <Link href="/boutique" className="transition-colors hover:text-brand-caramel">
+              {t.boutique}
+            </Link>
+            <div className="group relative flex items-center gap-1 transition-colors hover:text-brand-caramel">
+              <Link href="#categories-section">{t.categories}</Link>
+              <ChevronDown size={12} />
+              <div className="invisible absolute left-1/2 top-full z-20 mt-3 w-64 -translate-x-1/2 rounded-[18px] border border-brand-sand bg-white p-2 opacity-0 shadow-[0_10px_30px_rgba(45,34,27,0.08)] transition-all group-hover:visible group-hover:opacity-100">
+                {categories.slice(0, 5).map((category) => (
+                  <Link
+                    key={category.id}
+                    href={`/categorie/${category.slug}`}
+                    className="block rounded-full px-4 py-2 text-[10px] font-medium normal-case tracking-normal text-brand-brown transition-colors hover:bg-brand-cream"
+                  >
+                    {localizeCategoryName(category.slug, category.name, language)}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <Link href="/#about-section" className="transition-colors hover:text-brand-caramel">
+              {t.aPropos}
+            </Link>
+            <Link href="/#contact-section" className="transition-colors hover:text-brand-caramel">
+              {t.contact}
+            </Link>
+          </nav>
 
-        <div className="flex items-center justify-end gap-5">
-          <Link href="/account" className="flex flex-col items-center gap-1 text-brand-espresso transition-colors hover:text-brand-caramel">
+          <form onSubmit={handleSearch} className="flex w-full max-w-2xl overflow-hidden rounded-full border border-brand-taupe bg-white/80 shadow-[0_10px_26px_rgba(83,58,42,0.06)]">
+            <input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              type="search"
+              placeholder={t.searchPlaceholder}
+              className="h-12 min-w-0 flex-1 bg-transparent px-5 text-sm text-brand-espresso outline-none placeholder:text-brand-gray-text"
+            />
+            <button type="submit" className="grid h-12 w-14 place-items-center bg-brand-espresso text-brand-cream transition-colors hover:bg-brand-brown" aria-label="Rechercher">
+              <Search size={19} />
+            </button>
+          </form>
+        </div>
+
+        <div className="flex items-center justify-end gap-4">
+          <div className="flex items-center rounded-full border border-brand-sand bg-white/80 p-1 text-[10px] font-bold uppercase tracking-[0.16em] shadow-[0_8px_20px_rgba(83,58,42,0.05)]">
+            <button
+              type="button"
+              onClick={() => setLanguage('FR')}
+              className={`rounded-full px-3.5 py-2 transition-colors ${language === 'FR' ? 'bg-brand-brown text-brand-cream' : 'text-brand-gray-text hover:text-brand-brown'}`}
+              aria-pressed={language === 'FR'}
+            >
+              FR
+            </button>
+            <button
+              type="button"
+              onClick={() => setLanguage('AR')}
+              className={`rounded-full px-3.5 py-2 transition-colors ${language === 'AR' ? 'bg-brand-brown text-brand-cream' : 'text-brand-gray-text hover:text-brand-brown'}`}
+              aria-pressed={language === 'AR'}
+            >
+              AR
+            </button>
+          </div>
+          <Link href="/account" className="flex min-w-[76px] flex-col items-center gap-1 text-brand-espresso transition-colors hover:text-brand-caramel">
             <User size={22} strokeWidth={1.7} />
-            <span className="text-[10px]">{t.monCompte}</span>
+            <span className="text-[10px] leading-none whitespace-nowrap">{t.monCompte}</span>
           </Link>
           <Link href="/favoris" className="flex flex-col items-center gap-1 text-brand-espresso transition-colors hover:text-brand-caramel">
-            <span className="relative"><Heart size={22} strokeWidth={1.7} />{counter(favoritesCount)}</span>
+            <span className="relative">
+              <Heart size={22} strokeWidth={1.7} />
+              {counter(favoritesCount)}
+            </span>
             <span className="text-[10px]">{t.favoris}</span>
           </Link>
           <button type="button" onClick={() => toggleCart(true)} className="flex flex-col items-center gap-1 text-brand-espresso transition-colors hover:text-brand-caramel">
-            <span className="relative"><ShoppingBag size={22} strokeWidth={1.7} />{counter(totalCartCount)}</span>
+            <span className="relative">
+              <ShoppingBag size={22} strokeWidth={1.7} />
+              {counter(totalCartCount)}
+            </span>
             <span className="text-[10px]">{t.panier}</span>
           </button>
         </div>
@@ -156,31 +236,63 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
       >
         <div className="mb-5 flex items-center justify-between border-b border-brand-sand pb-5">
           <Logo compact className="items-start" />
-          <button type="button" onClick={() => setIsMobileMenuOpen(false)} className="grid h-10 w-10 place-items-center rounded-full bg-brand-sand/60 text-brand-espresso" aria-label={t.closeMenu}>
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="grid h-10 w-10 place-items-center rounded-full bg-brand-sand/60 text-brand-espresso"
+            aria-label={t.closeMenu}
+          >
             <X size={21} />
           </button>
         </div>
         <form onSubmit={handleSearch} className="mb-6 flex overflow-hidden rounded-full border border-brand-taupe bg-white/70">
-          <input value={search} onChange={(event) => setSearch(event.target.value)} type="search" placeholder={t.searchPlaceholder} className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm outline-none" />
-          <button type="submit" className="bg-brand-espresso px-4 text-brand-cream" aria-label="Rechercher"><Search size={18} /></button>
+          <input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            type="search"
+            placeholder={t.searchPlaceholder}
+            className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm outline-none"
+          />
+          <button type="submit" className="bg-brand-espresso px-4 text-brand-cream" aria-label="Rechercher">
+            <Search size={18} />
+          </button>
         </form>
         <nav className="flex flex-col text-[13px] font-semibold uppercase tracking-[0.08em] text-brand-espresso">
-          <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5">{t.accueil}</Link>
-          <Link href="/boutique" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5">{t.boutique}</Link>
+          <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5">
+            {t.accueil}
+          </Link>
+          <Link href="/boutique" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5">
+            {t.boutique}
+          </Link>
           <p className="pt-5 text-[10px] tracking-[0.2em] text-brand-caramel">{t.categories}</p>
           {categories.map((category) => (
-            <Link key={category.id} href={`/categorie/${category.slug}`} onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand/70 py-3 font-normal normal-case tracking-normal text-brand-brown">
+            <Link
+              key={category.id}
+              href={`/categorie/${category.slug}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="border-b border-brand-sand/70 py-3 font-normal normal-case tracking-normal text-brand-brown"
+            >
               {localizeCategoryName(category.slug, category.name, language)}
             </Link>
           ))}
-          <Link href="/#about-section" onClick={() => setIsMobileMenuOpen(false)} className="mt-2 border-b border-brand-sand py-3.5">{t.aPropos}</Link>
-          <Link href="/#contact-section" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5">{t.contact}</Link>
-          <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5 text-brand-caramel">{t.monCompte}</Link>
+          <Link href="/#about-section" onClick={() => setIsMobileMenuOpen(false)} className="mt-2 border-b border-brand-sand py-3.5">
+            {t.aPropos}
+          </Link>
+          <Link href="/#contact-section" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5">
+            {t.contact}
+          </Link>
+          <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-brand-sand py-3.5 text-brand-caramel">
+            {t.monCompte}
+          </Link>
         </nav>
         <div className="mt-6 flex items-center gap-2 text-xs font-bold">
-          <button type="button" onClick={() => setLanguage('FR')} className={language === 'FR' ? 'text-brand-caramel' : 'text-brand-gray-text'}>FR</button>
+          <button type="button" onClick={() => setLanguage('FR')} className={language === 'FR' ? 'text-brand-caramel' : 'text-brand-gray-text'}>
+            FR
+          </button>
           <span className="text-brand-taupe">|</span>
-          <button type="button" onClick={() => setLanguage('AR')} className={language === 'AR' ? 'text-brand-caramel' : 'text-brand-gray-text'}>AR</button>
+          <button type="button" onClick={() => setLanguage('AR')} className={language === 'AR' ? 'text-brand-caramel' : 'text-brand-gray-text'}>
+            AR
+          </button>
         </div>
       </aside>
     </header>

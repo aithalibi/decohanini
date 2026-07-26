@@ -36,7 +36,7 @@ export default function Navbar({ categories = [] }: { categories?: NavigationCat
 
   return (
     <nav className="relative z-30 hidden h-[52px] w-full bg-[#090909] text-brand-cream md:block">
-      <div className="container mx-auto flex h-full items-center justify-between px-5 lg:px-10">
+      <div className="mx-auto flex h-full w-full max-w-[1400px] items-center justify-between px-5 lg:px-10">
         <div className="flex h-full items-center gap-8 text-[11px] font-semibold uppercase tracking-[0.08em] lg:gap-10">
           {links.slice(0, 2).map((link) => <Link key={link.href} href={link.href} className={linkClass(link.active)}>{link.label}</Link>)}
           <div ref={dropdownRef} className="relative flex h-full items-center">

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { Phone, MapPin, Package, MessageCircle, Clock, CheckCircle } from 'lucide-react';
 import { updateOrderStatus } from '@/actions/orders';
 import OrderStatusBadge from './OrderStatusBadge';
@@ -77,12 +76,10 @@ export default function OrderDetails({ order }: OrderDetailsProps) {
               <div key={item.id} className="p-5 flex items-center gap-4">
                 <div className="w-16 h-16 bg-gray-100 rounded-xl overflow-hidden relative flex-shrink-0">
                   {item.product?.images?.[0] ? (
-                    <Image
+                    <img
                       src={item.product.images[0].url}
                       alt={item.product ? localizeProductName(item.product.slug, item.productName, language) : item.productName}
-                      fill
-                      className="object-cover"
-                      sizes="64px"
+                      className="h-full w-full object-cover"
                     />
                   ) : (
                     <Package className="text-gray-300 m-auto mt-4" size={24} />

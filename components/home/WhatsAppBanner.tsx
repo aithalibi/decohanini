@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { MessageCircle } from 'lucide-react';
 import type { SiteSettings } from '@prisma/client';
 import { useLanguageStore } from '@/store/language-store';
@@ -13,18 +12,25 @@ export default function WhatsAppBanner({ settings }: { settings?: SiteSettings }
   const phone = settings?.whatsappNumber ? settings.whatsappNumber.replace(/^212/, '0').replace(/(\d{4})(\d{6})/, '$1 $2') : '0777 422673';
 
   return (
-    <section className="bg-brand-white px-3 pb-0 sm:px-5 lg:px-10">
-      <div className="container mx-auto grid min-h-[180px] overflow-hidden bg-brand-beige md:grid-cols-[46%_54%]">
-        <div className="flex flex-col items-start justify-center px-7 py-8 text-brand-espresso sm:px-10 md:px-14">
-          <h2 className="text-xl font-bold uppercase tracking-[0.05em] md:text-2xl">{t.needHelp}</h2>
-          <p className="mt-2 text-sm text-brand-gray-text">{t.contactWhatsapp}</p>
-          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="mt-5 flex items-center gap-2 rounded-full bg-brand-espresso px-5 py-2.5 text-xs font-bold text-white transition-colors hover:bg-brand-brown">
-            <MessageCircle size={17} />{phone}
-          </a>
+    <section className="w-full px-4 py-8 sm:px-5 lg:px-10 lg:py-12">
+      <div className="mx-auto w-full max-w-[1400px] border border-brand-sand bg-[linear-gradient(135deg,#fffdf9_0%,#f7efe3_55%,#efe4d4_100%)] px-6 py-6 sm:px-8 lg:flex lg:items-center lg:justify-between">
+        <div className="max-w-2xl">
+          <h2 className="text-lg font-bold uppercase tracking-[0.08em] text-brand-espresso md:text-xl">
+            {t.needHelp}
+          </h2>
+          <p className="mt-2 text-sm text-brand-gray-text">
+            {t.contactWhatsapp}
+          </p>
         </div>
-        <div className="relative min-h-[190px] md:min-h-[220px]">
-          <Image src={settings?.heroImageUrl || '/images/hero/hero-panorama-v2.png'} alt="Salon Déco Hanini" fill className="object-cover object-[70%_center]" sizes="(max-width: 767px) 100vw, 54vw" />
-        </div>
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-espresso px-5 py-3 text-xs font-bold text-white transition-colors hover:bg-brand-brown lg:mt-0"
+        >
+          <MessageCircle size={17} />
+          {phone}
+        </a>
       </div>
     </section>
   );

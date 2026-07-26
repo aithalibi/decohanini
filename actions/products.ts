@@ -13,8 +13,8 @@ function generateSlug(name: string): string {
     .replace(/[ìíîï]/g, 'i')
     .replace(/[òóôõö]/g, 'o')
     .replace(/[ùúûü]/g, 'u')
-    .replace(/[ç]/g, 'c')
-    .replace(/[&]/g, 'et')
+    .replace(/ç/g, 'c')
+    .replace(/&/g, 'et')
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
@@ -33,7 +33,7 @@ function getImageUrls(formData: FormData): string[] {
           .slice(0, 6);
       }
     } catch {
-      // Fall back to the legacy single-image field below.
+      // Fallback to the legacy single-image field below.
     }
   }
 
@@ -54,6 +54,12 @@ function getVariants(formData: FormData) {
   }
 }
 
+function normalizeVariantImageUrl(imageUrl: string | null | undefined) {
+  if (typeof imageUrl !== 'string') return null;
+  const trimmed = imageUrl.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
 export async function getProducts(filters?: {
   categoryId?: number;
   search?: string;
@@ -68,13 +74,13 @@ export async function getProducts(filters?: {
     isVisible?: boolean;
     price?: { gte?: number; lte?: number };
     stock?: { gt: number };
-    OR?: Array<{ name?: { contains: string; mode: 'insensitive' } }>;
+    OR?: Array<{ name?: { contains: string } }>;
   } = {};
 
   if (filters?.categoryId) where.categoryId = filters.categoryId;
   if (filters?.isVisible !== undefined) where.isVisible = filters.isVisible;
   if (filters?.search) {
-    where.OR = [{ name: { contains: filters.search, mode: 'insensitive' } }];
+    where.OR = [{ name: { contains: filters.search.trim() } }];
   }
   if (filters?.minPrice !== undefined || filters?.maxPrice !== undefined) {
     where.price = {};
@@ -83,19 +89,20 @@ export async function getProducts(filters?: {
   }
   if (filters?.inStock) where.stock = { gt: 0 };
 
-  const orderBy = filters?.sort === 'prix-asc'
-    ? { price: 'asc' as const }
-    : filters?.sort === 'prix-desc'
-      ? { price: 'desc' as const }
-      : filters?.sort === 'name'
-        ? { name: 'asc' as const }
-        : { createdAt: 'desc' as const };
+  const orderBy =
+    filters?.sort === 'prix-asc'
+      ? { price: 'asc' as const }
+      : filters?.sort === 'prix-desc'
+        ? { price: 'desc' as const }
+        : filters?.sort === 'name'
+          ? { name: 'asc' as const }
+          : { createdAt: 'desc' as const };
 
   return prisma.product.findMany({
     where,
     include: {
       category: { select: { name: true, slug: true } },
-      images: { orderBy: { sortOrder: 'asc' }, take: 2 },
+      images: { orderBy: { sortOrder: 'asc' }, take: 4 },
       variants: { orderBy: { sortOrder: 'asc' } },
     },
     orderBy,
@@ -153,13 +160,20 @@ export async function createProduct(_prevState: unknown, formData: FormData) {
     if (!variantsResult.success) {
       return { success: false, error: variantsResult.error.issues[0]?.message || 'Les variantes sont invalides.' };
     }
+
     const variants = variantsResult.data;
-    const normalizedProduct = variants.length > 0 ? {
-      ...parsed.data,
-      price: Math.min(...variants.map((variant) => variant.price)),
-      oldPrice: null,
-      stock: variants.reduce((total, variant) => total + variant.stock, 0),
-    } : { ...parsed.data, oldPrice: parsed.data.oldPrice ?? null };
+    const variantImageUrls = variants
+      .map((variant) => normalizeVariantImageUrl(variant.imageUrl))
+      .filter((url): url is string => Boolean(url));
+
+    const normalizedProduct = variants.length > 0
+      ? {
+          ...parsed.data,
+          price: Math.min(...variants.map((variant) => variant.price)),
+          oldPrice: null,
+          stock: variants.reduce((total, variant) => total + variant.stock, 0),
+        }
+      : { ...parsed.data, oldPrice: parsed.data.oldPrice ?? null };
 
     const slug = generateSlug(parsed.data.name);
     const existing = await prisma.product.findUnique({ where: { slug } });
@@ -171,15 +185,26 @@ export async function createProduct(_prevState: unknown, formData: FormData) {
       data: {
         ...normalizedProduct,
         slug: finalSlug,
-        variants: variants.length > 0 ? {
-          create: variants.map((variant, index) => ({ ...variant, oldPrice: variant.oldPrice ?? null, sortOrder: index })),
-        } : undefined,
+        variants:
+          variants.length > 0
+            ? {
+                create: variants.map((variant, index) => ({
+                  ...variant,
+                  imageUrl: normalizeVariantImageUrl(variant.imageUrl),
+                  oldPrice: variant.oldPrice ?? null,
+                  sortOrder: index,
+                })),
+              }
+            : undefined,
       },
     });
 
-    if (imageUrls.length > 0) {
+    const galleryUrls = variants.length > 0
+      ? [...variantImageUrls, ...imageUrls]
+      : imageUrls;
+    if (galleryUrls.length > 0) {
       await prisma.productImage.createMany({
-        data: imageUrls.map((url, index) => ({
+        data: galleryUrls.map((url, index) => ({
           url,
           isMain: index === 0,
           sortOrder: index,
@@ -189,6 +214,7 @@ export async function createProduct(_prevState: unknown, formData: FormData) {
     }
 
     revalidatePath('/admin/produits');
+    revalidatePath('/admin/apercu-site');
     revalidatePath('/');
     revalidatePath('/boutique');
     revalidatePath('/', 'layout');
@@ -227,13 +253,20 @@ export async function updateProduct(id: number, _prevState: unknown, formData: F
     if (!variantsResult.success) {
       return { success: false, error: variantsResult.error.issues[0]?.message || 'Les variantes sont invalides.' };
     }
+
     const variants = variantsResult.data;
-    const normalizedProduct = variants.length > 0 ? {
-      ...parsed.data,
-      price: Math.min(...variants.map((variant) => variant.price)),
-      oldPrice: null,
-      stock: variants.reduce((total, variant) => total + variant.stock, 0),
-    } : { ...parsed.data, oldPrice: parsed.data.oldPrice ?? null };
+    const variantImageUrls = variants
+      .map((variant) => normalizeVariantImageUrl(variant.imageUrl))
+      .filter((url): url is string => Boolean(url));
+
+    const normalizedProduct = variants.length > 0
+      ? {
+          ...parsed.data,
+          price: Math.min(...variants.map((variant) => variant.price)),
+          oldPrice: null,
+          stock: variants.reduce((total, variant) => total + variant.stock, 0),
+        }
+      : { ...parsed.data, oldPrice: parsed.data.oldPrice ?? null };
 
     const imageUrls = getImageUrls(formData);
     const currentProduct = await prisma.product.findUnique({ where: { id }, select: { slug: true } });
@@ -243,21 +276,27 @@ export async function updateProduct(id: number, _prevState: unknown, formData: F
         where: { id },
         data: { ...normalizedProduct },
       });
+
       await transaction.productVariant.deleteMany({ where: { productId: id } });
       if (variants.length > 0) {
         await transaction.productVariant.createMany({
           data: variants.map((variant, index) => ({
             ...variant,
+            imageUrl: normalizeVariantImageUrl(variant.imageUrl),
             oldPrice: variant.oldPrice ?? null,
             sortOrder: index,
             productId: id,
           })),
         });
       }
+
       await transaction.productImage.deleteMany({ where: { productId: id } });
-      if (imageUrls.length > 0) {
+      const galleryUrls = variants.length > 0
+        ? [...variantImageUrls, ...imageUrls]
+        : imageUrls;
+      if (galleryUrls.length > 0) {
         await transaction.productImage.createMany({
-          data: imageUrls.map((url, index) => ({
+          data: galleryUrls.map((url, index) => ({
             url,
             isMain: index === 0,
             sortOrder: index,
@@ -268,6 +307,7 @@ export async function updateProduct(id: number, _prevState: unknown, formData: F
     });
 
     revalidatePath('/admin/produits');
+    revalidatePath('/admin/apercu-site');
     revalidatePath('/');
     revalidatePath('/boutique');
     if (currentProduct) revalidatePath(`/produit/${currentProduct.slug}`);
@@ -283,6 +323,7 @@ export async function deleteProduct(id: number) {
     await requireAdmin();
     await prisma.product.delete({ where: { id } });
     revalidatePath('/admin/produits');
+    revalidatePath('/admin/apercu-site');
     revalidatePath('/');
     revalidatePath('/boutique');
     return { success: true };
@@ -296,8 +337,24 @@ export async function toggleProductVisibility(id: number, isVisible: boolean) {
     await requireAdmin();
     await prisma.product.update({ where: { id }, data: { isVisible } });
     revalidatePath('/admin/produits');
+    revalidatePath('/admin/apercu-site');
     revalidatePath('/');
     revalidatePath('/boutique');
+    return { success: true };
+  } catch {
+    return { success: false, error: 'Une erreur est survenue.' };
+  }
+}
+
+export async function toggleProductFeatured(id: number, isFeatured: boolean) {
+  try {
+    await requireAdmin();
+    await prisma.product.update({ where: { id }, data: { isFeatured } });
+    revalidatePath('/admin/produits');
+    revalidatePath('/admin/apercu-site');
+    revalidatePath('/');
+    revalidatePath('/boutique');
+    revalidatePath('/', 'layout');
     return { success: true };
   } catch {
     return { success: false, error: 'Une erreur est survenue.' };

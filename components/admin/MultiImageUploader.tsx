@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Image from 'next/image';
 import { ImagePlus, Star, Trash2, Upload } from 'lucide-react';
 import { useLanguageStore } from '@/store/language-store';
 
@@ -57,7 +56,7 @@ export default function MultiImageUploader({ initialUrls = [] }: { initialUrls?:
       <div className="grid grid-cols-2 gap-3">
         {urls.map((url, index) => (
           <div key={`${url}-${index}`} className="group relative aspect-square overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
-            <Image src={url} alt={`Photo ${index + 1}`} fill sizes="140px" className="object-cover" />
+            <img src={url} alt={`Photo ${index + 1}`} className="h-full w-full object-cover" />
             {index === 0 && <span className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-black/75 px-2 py-1 text-[9px] font-bold text-white"><Star size={10} fill="currentColor" />{isArabic ? 'رئيسية' : 'Principale'}</span>}
             <div className="absolute inset-x-0 bottom-0 flex translate-y-full justify-center gap-2 bg-black/65 p-2 transition-transform group-hover:translate-y-0">
               {index > 0 && <button type="button" onClick={() => makeMain(index)} className="rounded-lg bg-white p-2 text-gray-700" title={isArabic ? 'تعيين كصورة رئيسية' : 'Définir comme principale'}><Star size={15} /></button>}

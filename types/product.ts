@@ -4,6 +4,7 @@ export interface ProductVariant {
   price: number;
   oldPrice?: number | null;
   stock: number;
+  imageUrl?: string | null;
 }
 
 export interface Product {
@@ -16,8 +17,10 @@ export interface Product {
   oldPrice?: number | null;
   image: string | null;
   hoverImage?: string | null;
+  galleryImages?: string[];
   badge?: string | null;
   isFeatured?: boolean;
+  isOnSale?: boolean;
   shortDescription?: string | null;
   stock?: number;
   variants?: ProductVariant[];

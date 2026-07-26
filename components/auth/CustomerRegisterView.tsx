@@ -1,6 +1,7 @@
 'use client';
 
 import { Bell, ShieldCheck, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 import CustomerRegisterForm from '@/components/auth/CustomerRegisterForm';
 import { registerTranslations } from '@/data/auth-translations';
 import { useLanguageStore } from '@/store/language-store';
@@ -28,7 +29,10 @@ export default function CustomerRegisterView({ callbackUrl }: { callbackUrl: str
         </div>
 
         <div className="p-6 sm:p-10 md:p-12">
-          <div className="mb-7 flex items-center justify-end">
+          <div className="mb-7 flex flex-wrap items-center justify-end gap-3">
+            <Link href="/" className="rounded-full border border-brand-sand bg-brand-cream px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-brand-brown transition-colors hover:bg-brand-sand/70">
+              {isArabic ? 'عودة للرئيسية' : "Retour à l'accueil"}
+            </Link>
             <div className="flex rounded-full border border-brand-sand bg-brand-cream p-1 text-[11px] font-bold">
               <button type="button" onClick={() => setLanguage('FR')} aria-pressed={language === 'FR'} className={`rounded-full px-3 py-2 transition-colors ${language === 'FR' ? 'bg-brand-espresso text-brand-cream' : 'text-brand-gray-text hover:text-brand-brown'}`}>{t.languageFr}</button>
               <button type="button" onClick={() => setLanguage('AR')} aria-pressed={language === 'AR'} className={`rounded-full px-3 py-2 transition-colors ${language === 'AR' ? 'bg-brand-espresso text-brand-cream' : 'text-brand-gray-text hover:text-brand-brown'}`}>{t.languageAr}</button>

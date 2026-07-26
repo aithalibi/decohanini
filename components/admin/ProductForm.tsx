@@ -3,6 +3,7 @@
 import React, { useEffect, useActionState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { Star } from 'lucide-react';
 import MultiImageUploader from '@/components/admin/MultiImageUploader';
 import ProductVariantEditor from '@/components/admin/ProductVariantEditor';
 import type { Product, Category, ProductImage, ProductVariant } from '@prisma/client';
@@ -22,7 +23,7 @@ export default function ProductForm({ action, product, categories }: ProductForm
 
   useEffect(() => {
     if (state?.success) {
-      toast.success(isArabic ? 'تم حفظ المنتج بنجاح!' : 'Produit enregistré avec succès !');
+      toast.success(isArabic ? 'Produit enregistre avec succes !' : 'Produit enregistre avec succes !');
       router.push('/admin/produits');
     } else if (state?.error) {
       toast.error(state.error);
@@ -30,19 +31,15 @@ export default function ProductForm({ action, product, categories }: ProductForm
   }, [state, router, isArabic]);
 
   return (
-    <form action={formAction} className="space-y-6 max-w-4xl">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* Colonne Principale */}
-        <div className="lg:col-span-2 space-y-6">
-          
-          {/* Informations principales */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-bold text-gray-800 mb-4">{isArabic ? 'المعلومات الرئيسية' : 'Informations principales'}</h3>
+    <form action={formAction} className="max-w-4xl space-y-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="space-y-6 lg:col-span-2">
+          <div className="rounded-2xl border border-gray-100 bg-white p-5">
+            <h3 className="mb-4 font-bold text-gray-800">{isArabic ? 'Informations principales' : 'Informations principales'}</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5" htmlFor="prod-name">
-                  {isArabic ? 'اسم المنتج' : 'Nom du produit'} <span className="text-red-500">*</span>
+                <label className="mb-1.5 block text-sm font-semibold text-gray-700" htmlFor="prod-name">
+                  {isArabic ? 'Nom du produit' : 'Nom du produit'} <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="prod-name"
@@ -50,68 +47,84 @@ export default function ProductForm({ action, product, categories }: ProductForm
                   type="text"
                   required
                   defaultValue={product?.name}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#E52329]"
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5" htmlFor="prod-cat">
-                  {isArabic ? 'الفئة' : 'Catégorie'} <span className="text-red-500">*</span>
+                <label className="mb-1.5 block text-sm font-semibold text-gray-700" htmlFor="prod-cat">
+                  {isArabic ? 'Categorie' : 'Categorie'} <span className="text-red-500">*</span>
                 </label>
                 <select
                   id="prod-cat"
                   name="categoryId"
                   required
                   defaultValue={product?.categoryId}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#E52329]"
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
                 >
-                  <option value="">{isArabic ? 'اختر فئة...' : 'Sélectionner une catégorie...'}</option>
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
+                  <option value="">{isArabic ? 'Selectionner une categorie...' : 'Selectionner une categorie...'}</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5" htmlFor="prod-short">
-                  {isArabic ? 'وصف مختصر' : 'Petite description'} <span className="text-gray-400 font-normal">({isArabic ? 'اختياري' : 'facultatif'})</span>
+                <label className="mb-1.5 block text-sm font-semibold text-gray-700" htmlFor="prod-short">
+                  {isArabic ? 'Description courte' : 'Description courte'} <span className="font-normal text-gray-400">(facultatif)</span>
                 </label>
                 <textarea
                   id="prod-short"
                   name="shortDescription"
                   rows={2}
                   defaultValue={product?.shortDescription ?? ''}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#E52329] resize-none"
+                  className="w-full resize-none rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
                 />
               </div>
+
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5" htmlFor="prod-description">
-                  {isArabic ? 'الوصف الكامل' : 'Description complète'} <span className="text-gray-400 font-normal">({isArabic ? 'اختياري' : 'facultatif'})</span>
+                <label className="mb-1.5 block text-sm font-semibold text-gray-700" htmlFor="prod-description">
+                  {isArabic ? 'Description complete' : 'Description complete'} <span className="font-normal text-gray-400">(facultatif)</span>
                 </label>
                 <textarea
                   id="prod-description"
                   name="description"
                   rows={5}
                   defaultValue={product?.description ?? ''}
-                  placeholder={isArabic ? 'صف المادة والتصميم وتفاصيل المنتج...' : 'Décrivez la matière, le style et les détails du produit...'}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#E52329] resize-y"
+                  placeholder={isArabic ? 'Decrivez la matiere, le style et les details du produit...' : 'Decrivez la matiere, le style et les details du produit...'}
+                  className="w-full resize-y rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
                 />
               </div>
+
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5" htmlFor="prod-dimensions">{isArabic ? 'الأبعاد' : 'Dimensions'} <span className="text-gray-400 font-normal">({isArabic ? 'اختياري' : 'facultatif'})</span></label>
-                <input id="prod-dimensions" name="dimensions" type="text" defaultValue={product?.dimensions ?? ''} placeholder={isArabic ? 'مثال: 40 × 60 سم' : 'Ex: 40 × 60 cm'} className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#E52329]" />
+                <label className="mb-1.5 block text-sm font-semibold text-gray-700" htmlFor="prod-dimensions">
+                  {isArabic ? 'Dimensions' : 'Dimensions'} <span className="font-normal text-gray-400">(facultatif)</span>
+                </label>
+                <input
+                  id="prod-dimensions"
+                  name="dimensions"
+                  type="text"
+                  defaultValue={product?.dimensions ?? ''}
+                  placeholder={isArabic ? 'Ex: 40 x 60 cm' : 'Ex: 40 x 60 cm'}
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
+                />
               </div>
             </div>
           </div>
 
-          {/* Prix et Stock */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-bold text-gray-800 mb-1">{isArabic ? 'الثمن والمخزون الافتراضيان' : 'Prix et stock par défaut'}</h3>
-            <p className="mb-4 text-xs leading-5 text-gray-500">{isArabic ? 'تستعمل هذه القيم إذا لم تضف أي خيارات أسفله.' : 'Ces valeurs sont utilisées si vous ne créez aucune variante ci-dessous.'}</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="rounded-2xl border border-gray-100 bg-white p-5">
+            <h3 className="mb-1 font-bold text-gray-800">{isArabic ? 'Prix et stock par defaut' : 'Prix et stock par defaut'}</h3>
+            <p className="mb-4 text-xs leading-5 text-gray-500">
+              {isArabic
+                ? 'Si vous ajoutez un ancien prix plus eleve, la boutique affichera automatiquement le pourcentage de promo (ex: -30%).'
+                : 'Si vous ajoutez un ancien prix plus eleve, la boutique affichera automatiquement le pourcentage de promo (ex: -30%).'}
+            </p>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5" htmlFor="prod-price">
-                  {isArabic ? 'الثمن (درهم)' : 'Prix (DH)'} <span className="text-red-500">*</span>
+                <label className="mb-1.5 block text-sm font-semibold text-gray-700" htmlFor="prod-price">
+                  {isArabic ? 'Prix (DH)' : 'Prix (DH)'} <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="prod-price"
@@ -121,13 +134,13 @@ export default function ProductForm({ action, product, categories }: ProductForm
                   min="0"
                   required
                   defaultValue={product?.price?.toString() ?? ''}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#E52329]"
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
                 />
-                <p className="mt-1.5 text-xs text-gray-500">{isArabic ? 'أدخل 0 لعرض "الثمن عند الطلب" في المتجر.' : 'Saisissez 0 pour afficher "Prix sur demande" dans la boutique.'}</p>
               </div>
+
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5" htmlFor="prod-old">
-                  {isArabic ? 'الثمن القديم (درهم)' : 'Ancien prix (DH)'} <span className="text-gray-400 font-normal">({isArabic ? 'اختياري' : 'facultatif'})</span>
+                <label className="mb-1.5 block text-sm font-semibold text-gray-700" htmlFor="prod-old">
+                  {isArabic ? 'Ancien prix (DH)' : 'Ancien prix (DH)'} <span className="font-normal text-gray-400">(facultatif)</span>
                 </label>
                 <input
                   id="prod-old"
@@ -136,12 +149,13 @@ export default function ProductForm({ action, product, categories }: ProductForm
                   step="0.01"
                   min="0"
                   defaultValue={product?.oldPrice?.toString() ?? ''}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#E52329]"
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
                 />
               </div>
+
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5" htmlFor="prod-stock">
-                  {isArabic ? 'المخزون' : 'Stock'}
+                <label className="mb-1.5 block text-sm font-semibold text-gray-700" htmlFor="prod-stock">
+                  {isArabic ? 'Stock' : 'Stock'}
                 </label>
                 <input
                   id="prod-stock"
@@ -150,94 +164,104 @@ export default function ProductForm({ action, product, categories }: ProductForm
                   min="0"
                   required
                   defaultValue={product?.stock ?? 0}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#E52329]"
+                  className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
                 />
               </div>
             </div>
           </div>
 
-          <ProductVariantEditor initialVariants={product?.variants.map((variant) => ({
-            name: variant.name,
-            price: variant.price.toString(),
-            oldPrice: variant.oldPrice?.toString() ?? '',
-            stock: String(variant.stock),
-          }))} />
+          <ProductVariantEditor
+            initialVariants={product?.variants.map((variant) => ({
+              name: variant.name,
+              price: variant.price.toString(),
+              oldPrice: variant.oldPrice?.toString() ?? '',
+              stock: String(variant.stock),
+              imageUrl: variant.imageUrl ?? '',
+            }))}
+          />
         </div>
 
-        {/* Colonne Latérale */}
         <div className="space-y-6">
-          
-          {/* Images */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-bold text-gray-800 mb-4">{isArabic ? 'صور المنتج' : 'Photos du produit'}</h3>
+          <div className="rounded-2xl border border-gray-100 bg-white p-5">
+            <h3 className="mb-4 font-bold text-gray-800">{isArabic ? 'Photos du produit' : 'Photos du produit'}</h3>
             <MultiImageUploader initialUrls={product?.images?.map((image) => image.url) ?? []} />
+            <p className="mt-2 text-[10px] leading-4 text-gray-500">
+              {isArabic
+                ? 'La premiere photo est la principale dans la boutique. Vous pouvez ajouter jusqu a 6 images.'
+                : 'La premiere photo est la principale dans la boutique. Vous pouvez ajouter jusqu a 6 images.'}
+            </p>
           </div>
 
-          {/* Options d'affichage */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-4">
-            <h3 className="font-bold text-gray-800 mb-2">{isArabic ? 'الخيارات' : 'Options'}</h3>
-            
-            <label className="flex items-center gap-3 cursor-pointer group">
+          <div className="rounded-2xl border border-gray-100 bg-white p-5 space-y-4">
+            <h3 className="mb-2 font-bold text-gray-800">{isArabic ? 'Options' : 'Options'}</h3>
+
+            <label className="group flex cursor-pointer items-center gap-3">
               <div className="relative">
-                <input type="checkbox" name="isVisible" value="true" defaultChecked={product?.isVisible ?? true} className="sr-only peer" />
+                <input type="checkbox" name="isVisible" value="true" defaultChecked={product?.isVisible ?? true} className="peer sr-only" />
                 <input type="hidden" name="isVisible" value="false" />
-                <div className="w-11 h-6 bg-gray-200 peer-checked:bg-green-500 rounded-full transition-colors" />
-                <div className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform" />
+                <div className="h-6 w-11 rounded-full bg-gray-200 transition-colors peer-checked:bg-green-500" />
+                <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5" />
               </div>
-              <span className="text-sm font-semibold text-gray-700">{isArabic ? 'ظاهر في الموقع' : 'Visible sur le site'}</span>
+              <span className="text-sm font-semibold text-gray-700">{isArabic ? 'Visible sur le site' : 'Visible sur le site'}</span>
             </label>
 
-            <label className="flex items-center gap-3 cursor-pointer group">
+            <label className="group flex cursor-pointer items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2.5">
+              <Star size={16} className="text-amber-600" />
               <div className="relative">
-                <input type="checkbox" name="isFeatured" value="true" defaultChecked={product?.isFeatured ?? false} className="sr-only peer" />
+                <input type="checkbox" name="isFeatured" value="true" defaultChecked={product?.isFeatured ?? false} className="peer sr-only" />
                 <input type="hidden" name="isFeatured" value="false" />
-                <div className="w-11 h-6 bg-gray-200 peer-checked:bg-[#E52329] rounded-full transition-colors" />
-                <div className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform" />
+                <div className="h-6 w-11 rounded-full bg-gray-200 transition-colors peer-checked:bg-[#E52329]" />
+                <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5" />
               </div>
-              <span className="text-sm font-semibold text-gray-700">{isArabic ? 'منتج مميز' : 'Mettre en avant'}</span>
+              <div>
+                <span className="block text-sm font-semibold text-gray-700">{isArabic ? 'Produit phare' : 'Produit phare'}</span>
+                <span className="block text-[11px] text-gray-500">{isArabic ? 'Affiché dans la section d’accueil' : 'Affiché dans la section d’accueil'}</span>
+              </div>
             </label>
 
-            <label className="flex items-center gap-3 cursor-pointer group">
+            <label className="group flex cursor-pointer items-center gap-3">
               <div className="relative">
-                <input type="checkbox" name="isNew" value="true" defaultChecked={product?.isNew ?? false} className="sr-only peer" />
+                <input type="checkbox" name="isNew" value="true" defaultChecked={product?.isNew ?? false} className="peer sr-only" />
                 <input type="hidden" name="isNew" value="false" />
-                <div className="w-11 h-6 bg-gray-200 peer-checked:bg-blue-500 rounded-full transition-colors" />
-                <div className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform" />
+                <div className="h-6 w-11 rounded-full bg-gray-200 transition-colors peer-checked:bg-blue-500" />
+                <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5" />
               </div>
-                <span className="text-sm font-semibold text-gray-700">{isArabic ? 'شارة "جديد"' : 'Badge "Nouveau"'}</span>
+              <span className="text-sm font-semibold text-gray-700">{isArabic ? 'Badge Nouveau' : 'Badge Nouveau'}</span>
             </label>
-            
-            <label className="flex items-center gap-3 cursor-pointer group">
+
+            <label className="group flex cursor-pointer items-center gap-3">
               <div className="relative">
-                <input type="checkbox" name="isOnSale" value="true" defaultChecked={product?.isOnSale ?? false} className="sr-only peer" />
+                <input type="checkbox" name="isOnSale" value="true" defaultChecked={product?.isOnSale ?? false} className="peer sr-only" />
                 <input type="hidden" name="isOnSale" value="false" />
-                <div className="w-11 h-6 bg-gray-200 peer-checked:bg-orange-500 rounded-full transition-colors" />
-                <div className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow peer-checked:translate-x-5 transition-transform" />
+                <div className="h-6 w-11 rounded-full bg-gray-200 transition-colors peer-checked:bg-orange-500" />
+                <div className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5" />
               </div>
-              <span className="text-sm font-semibold text-gray-700">{isArabic ? 'شارة "تخفيض"' : 'Badge "Promotion"'}</span>
+              <span className="text-sm font-semibold text-gray-700">{isArabic ? 'Badge promotion' : 'Badge promotion'}</span>
             </label>
           </div>
         </div>
       </div>
 
-      {/* Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200">
+      <div className="flex flex-col gap-3 border-t border-gray-200 pt-6 sm:flex-row">
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-6 py-3 border border-gray-200 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-50 transition-colors cursor-pointer"
+          className="cursor-pointer rounded-xl border border-gray-200 px-6 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
         >
-          {isArabic ? 'إلغاء →' : '← Annuler'}
+          {isArabic ? 'Annuler' : 'Annuler'}
         </button>
         <button
           type="submit"
           disabled={isPending}
-          className="flex-1 sm:flex-none px-8 py-3 bg-[#E52329] text-white rounded-xl font-bold text-sm hover:bg-[#B8161B] transition-colors disabled:opacity-60 flex items-center justify-center gap-2 cursor-pointer"
+          className="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#E52329] px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-[#B8161B] disabled:opacity-60 sm:flex-none"
         >
           {isPending ? (
-            <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />{isArabic ? 'جاري الحفظ...' : 'Enregistrement...'}</>
+            <>
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+              {isArabic ? 'Enregistrement...' : 'Enregistrement...'}
+            </>
           ) : (
-            isArabic ? 'حفظ المنتج' : 'Enregistrer le produit'
+            isArabic ? 'Enregistrer le produit' : 'Enregistrer le produit'
           )}
         </button>
       </div>

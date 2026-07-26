@@ -30,6 +30,7 @@ export const productVariantsSchema = z.array(z.object({
   price: z.coerce.number().positive('Le prix de la variante doit être supérieur à 0').max(999999),
   oldPrice: z.coerce.number().positive().max(999999).optional().nullable(),
   stock: z.coerce.number().int().min(0, 'Le stock ne peut pas être négatif'),
+  imageUrl: z.string().trim().optional().nullable(),
 })).max(20, 'Maximum 20 variantes par produit');
 
 export type ProductFormData = z.infer<typeof productSchema>;

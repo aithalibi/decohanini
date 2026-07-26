@@ -19,6 +19,7 @@ type StoreProductRecord = {
     price: number | { toString(): string };
     oldPrice: number | { toString(): string } | null;
     stock: number;
+    imageUrl?: string | null;
   }>;
 };
 
@@ -29,6 +30,7 @@ export function toStoreProduct(product: StoreProductRecord): Product {
     price: Number(variant.price),
     oldPrice: variant.oldPrice == null ? null : Number(variant.oldPrice),
     stock: variant.stock,
+    imageUrl: variant.imageUrl ?? null,
   })) ?? [];
 
   return {
@@ -41,8 +43,16 @@ export function toStoreProduct(product: StoreProductRecord): Product {
     oldPrice: product.oldPrice == null ? null : Number(product.oldPrice),
     image: product.images[0]?.url || null,
     hoverImage: product.images[1]?.url || null,
-    badge: product.isNew ? 'Nouveau' : product.isOnSale ? 'Promo' : null,
+    galleryImages: product.images.map((image) => image.url),
+    badge: product.oldPrice && Number(product.oldPrice) > Number(product.price)
+      ? `-${Math.round((1 - Number(product.price) / Number(product.oldPrice)) * 100)}%`
+      : product.isNew
+        ? 'Nouveau'
+        : product.isFeatured
+          ? 'PREMIUM'
+          : null,
     isFeatured: product.isFeatured,
+    isOnSale: product.isOnSale,
     shortDescription: product.shortDescription,
     stock: product.stock,
     variants,

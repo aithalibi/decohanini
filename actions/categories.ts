@@ -104,12 +104,62 @@ export async function updateCategory(id: number, _prevState: unknown, formData: 
 export async function deleteCategory(id: number) {
   try {
     await requireAdmin();
-    await prisma.category.delete({ where: { id } });
+
+    const [categoryToDelete, fallbackCategory] = await prisma.$transaction([
+      prisma.category.findUnique({
+        where: { id },
+        select: {
+          id: true,
+          slug: true,
+          name: true,
+          products: { select: { id: true } },
+        },
+      }),
+      prisma.category.findFirst({
+        where: { id: { not: id } },
+        orderBy: [{ sortOrder: 'asc' }, { id: 'asc' }],
+        select: { id: true, slug: true, name: true },
+      }),
+    ]);
+
+    if (!categoryToDelete) {
+      return { success: false, error: 'Catégorie introuvable.' };
+    }
+
+    if (categoryToDelete.products.length > 0 && !fallbackCategory) {
+      return {
+        success: false,
+        error: 'Impossible de supprimer cette catégorie car elle contient des produits et aucune autre catégorie de secours n’existe.',
+      };
+    }
+
+    await prisma.$transaction(async (transaction) => {
+      if (categoryToDelete.products.length > 0 && fallbackCategory) {
+        await transaction.product.updateMany({
+          where: { categoryId: id },
+          data: { categoryId: fallbackCategory.id },
+        });
+      }
+
+      await transaction.category.delete({ where: { id } });
+    });
+
     revalidatePath('/admin/categories');
     revalidatePath('/');
     revalidatePath('/boutique');
+    if (fallbackCategory) {
+      revalidatePath(`/categorie/${fallbackCategory.slug}`);
+    }
     return { success: true };
-  } catch {
+  } catch (error) {
+    const message = error instanceof Error ? error.message : '';
+    if (message.includes('Foreign key') || message.includes('constraint')) {
+      return {
+        success: false,
+        error: 'Cette catégorie est liée à des produits. Déplacez d’abord les produits vers une autre catégorie.',
+      };
+    }
+
     return { success: false, error: 'Une erreur est survenue. Veuillez réessayer.' };
   }
 }

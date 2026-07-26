@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Tag, Edit, Eye, EyeOff } from 'lucide-react';
+import { toast } from 'sonner';
 import type { Category } from '@prisma/client';
 import DeleteConfirmDialog from './DeleteConfirmDialog';
 import { deleteCategory } from '@/actions/categories';
@@ -19,7 +19,13 @@ export default function CategoryCard({ category }: CategoryCardProps) {
   const language = useLanguageStore((state) => state.language);
   const isArabic = language === 'AR';
   const handleDelete = async () => {
-    await deleteCategory(category.id);
+    const result = await deleteCategory(category.id);
+    if (result.success) {
+      toast.success(isArabic ? 'تم حذف الفئة بنجاح' : 'Catégorie supprimée avec succès');
+      return;
+    }
+
+    toast.error(result.error || (isArabic ? 'تعذر حذف الفئة' : 'Impossible de supprimer la catégorie'));
   };
 
   return (
@@ -27,12 +33,10 @@ export default function CategoryCard({ category }: CategoryCardProps) {
       {/* Image */}
       <div className="relative h-40 bg-gray-100 flex-shrink-0">
         {category.imageUrl ? (
-          <Image
+          <img
             src={category.imageUrl}
             alt={category.name}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+            className="h-full w-full object-cover object-center brightness-110 contrast-105 saturate-110 transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
