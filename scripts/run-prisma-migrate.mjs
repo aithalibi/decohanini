@@ -77,6 +77,21 @@ async function loadMigrations() {
   return migrations;
 }
 
+function migrationChecksumVariants(sqlBuffer) {
+  const raw = createHash('sha256').update(sqlBuffer).digest('hex');
+  const text = sqlBuffer.toString('utf8');
+  const withoutBom = text.replace(/^\uFEFF/, '');
+  const lfNormalized = withoutBom.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  const crlfNormalized = withoutBom.replace(/\r?\n/g, '\r\n');
+
+  return new Set([
+    raw,
+    createHash('sha256').update(Buffer.from(withoutBom, 'utf8')).digest('hex'),
+    createHash('sha256').update(Buffer.from(lfNormalized, 'utf8')).digest('hex'),
+    createHash('sha256').update(Buffer.from(crlfNormalized, 'utf8')).digest('hex'),
+  ]);
+}
+
 async function ensureMigrationTable(connection) {
   await connection.query(`
     CREATE TABLE IF NOT EXISTS \`_prisma_migrations\` (
@@ -151,7 +166,7 @@ async function applyMigrations(connection, migrations) {
     const applied = appliedMigrations.get(migration.name);
 
     if (applied?.finished_at && !applied.rolled_back_at) {
-      if (applied.checksum !== migration.checksum) {
+      if (!migrationChecksumVariants(Buffer.from(migration.sql, 'utf8')).has(applied.checksum)) {
         throw new Error(`Migration ${migration.name} was modified after being applied.`);
       }
       console.log(`Migration already applied: ${migration.name}`);
@@ -159,7 +174,7 @@ async function applyMigrations(connection, migrations) {
     }
 
     if (applied && !applied.rolled_back_at) {
-      if (applied.checksum !== migration.checksum) {
+      if (!migrationChecksumVariants(Buffer.from(migration.sql, 'utf8')).has(applied.checksum)) {
         throw new Error(`Migration ${migration.name} changed after an unfinished attempt.`);
       }
 
