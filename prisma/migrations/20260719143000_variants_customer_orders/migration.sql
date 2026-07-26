@@ -1,4 +1,4 @@
-º-- New customer accounts are the safe default; the seeded administrator keeps its existing role.
+-- New customer accounts are the safe default; the seeded administrator keeps its existing role.
 ALTER TABLE `user`
     MODIFY `role` VARCHAR(191) NOT NULL DEFAULT 'CUSTOMER';
 
