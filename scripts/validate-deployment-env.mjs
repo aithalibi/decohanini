@@ -7,7 +7,10 @@ loadEnvConfig(process.cwd());
 const errors = [];
 
 function clean(value) {
-  return (value ?? '').trim().replace(/^(['"])(.*)\1$/, '$2');
+  return (value ?? '')
+    .trim()
+    .replace(/^(['"])(.*)\1$/, '$2')
+    .replace(/^DATABASE_URL\s*=\s*/i, '');
 }
 
 function required(name) {
