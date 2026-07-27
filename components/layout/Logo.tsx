@@ -25,7 +25,11 @@ export default function Logo({ light = false, compact = false, className = '' }:
         </span>
         <span className="tracking-[-0.065em]">anini</span>
       </div>
-      <span className={`mt-1 font-sans font-semibold uppercase ${accent} ${compact ? 'text-[5px] tracking-[0.22em]' : 'text-[7px] tracking-[0.3em] md:text-[8px]'}`}>
+      <span
+        className={`mt-1 font-sans font-semibold uppercase ${accent} ${
+          compact ? 'text-[5px] tracking-[0.22em]' : 'text-[7px] tracking-[0.3em] md:text-[8px]'
+        }`}
+      >
         Décoration · Maison · Art
       </span>
     </div>
