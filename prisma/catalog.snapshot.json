@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "exportedAt": "2026-07-19T21:12:51.779Z",
+  "exportedAt": "2026-07-27T17:12:20.806Z",
   "settings": {
     "storeName": "Déco Hanini",
     "whatsappNumber": "212714516493",
@@ -9,7 +9,7 @@
     "address": null,
     "heroTitle": "L'élégance dans chaque détail",
     "heroSubtitle": "Découvrez notre sélection unique de décoration pour un intérieur qui vous ressemble.",
-    "heroImageUrl": "/images/hero/hero-panorama-v2.png",
+    "heroImageUrl": "/lookbook/lookbook-01.jpeg",
     "instagramUrl": null,
     "facebookUrl": null,
     "deliveryText": "Livraison partout au Maroc",
@@ -18,153 +18,98 @@
   "categories": [
     {
       "name": "Vases",
-      "slug": "decoration",
-      "description": "Vases, sculptures et objets décoratifs pour le salon.",
-      "imageUrl": "/uploads/1784461450330-ktas2gv784o.jpg",
+      "slug": "vases",
+      "description": null,
+      "imageUrl": "/uploads/1784915819282-59646da5-9049-4e23-b1b1-8beeab334a59.jpg",
       "isVisible": true,
       "sortOrder": 1,
       "products": [
         {
-          "name": "Faux livre decoratif avec 3 gazelles dorees",
-          "slug": "faux-livre-3-gazelles-dorees",
-          "shortDescription": "Un faux livre blanc accompagne de trois gazelles dorees.",
-          "description": "Ensemble decoratif compose d'un faux livre blanc et de trois gazelles dorees de tailles differentes. Ideal sur une table basse, une console ou une etagere.",
-          "price": "100",
+          "name": "Vase",
+          "slug": "vase",
+          "shortDescription": null,
+          "description": null,
+          "price": "230",
           "oldPrice": null,
-          "stock": 10,
+          "stock": 150,
           "isVisible": true,
           "isFeatured": true,
-          "isNew": true,
+          "isNew": false,
           "isOnSale": false,
           "colors": null,
           "dimensions": null,
           "images": [
             {
-              "url": "/uploads/faux-livre-3-gazelles-dorees.jpeg",
+              "url": "/uploads/1784925693870-d856fc30-7519-4c1d-86a2-df7c1c49f4df.jpg",
               "publicId": null,
               "isMain": true,
               "sortOrder": 0
             }
           ],
-          "variants": []
+          "variants": [
+            {
+              "name": "Grand",
+              "price": "300",
+              "oldPrice": null,
+              "stock": 90,
+              "sortOrder": 0
+            },
+            {
+              "name": "Petit",
+              "price": "230",
+              "oldPrice": null,
+              "stock": 60,
+              "sortOrder": 1
+            }
+          ]
         },
         {
-          "name": "Vase pampas doré",
-          "slug": "demo-vase-pampas-dore",
-          "shortDescription": "Un vase doré lumineux pour fleurs séchées et pampas.",
-          "description": "Vase décoratif à finition dorée, idéal sur une console, une table basse ou dans une entrée.",
-          "price": "90",
-          "oldPrice": "110",
-          "stock": 16,
+          "name": "Vase",
+          "slug": "vase-1784925831488",
+          "shortDescription": null,
+          "description": null,
+          "price": "74.99",
+          "oldPrice": null,
+          "stock": 99,
           "isVisible": true,
           "isFeatured": true,
           "isNew": false,
-          "isOnSale": true,
+          "isOnSale": false,
           "colors": null,
           "dimensions": null,
           "images": [
             {
-              "url": "/images/products/vases.png",
+              "url": "/uploads/1784925819851-a13cdec6-c3df-4242-80b2-411c7928c5e3.jpg",
               "publicId": null,
               "isMain": true,
               "sortOrder": 0
             },
             {
-              "url": "/images/products/vase_noir.png",
+              "url": "/uploads/1784925824495-5af9e547-11ff-4af3-8f58-4addcce90b83.jpg",
               "publicId": null,
               "isMain": false,
               "sortOrder": 1
             }
           ],
-          "variants": [
-            {
-              "name": "Petit",
-              "price": "90",
-              "oldPrice": "110",
-              "stock": 7,
-              "sortOrder": 0
-            },
-            {
-              "name": "Moyen",
-              "price": "120",
-              "oldPrice": "140",
-              "stock": 5,
-              "sortOrder": 1
-            },
-            {
-              "name": "Grand",
-              "price": "160",
-              "oldPrice": "190",
-              "stock": 4,
-              "sortOrder": 2
-            }
-          ]
+          "variants": []
         },
         {
-          "name": "Vase noir sculptural",
-          "slug": "demo-vase-noir-sculptural",
-          "shortDescription": "Silhouette moderne et finition noire mate.",
-          "description": "Une pièce graphique qui apporte du contraste à une décoration beige, blanche ou boisée.",
-          "price": "180",
+          "name": "Vase",
+          "slug": "vase-1784925962690",
+          "shortDescription": null,
+          "description": null,
+          "price": "80",
           "oldPrice": null,
-          "stock": 8,
+          "stock": 100,
           "isVisible": true,
           "isFeatured": true,
           "isNew": false,
           "isOnSale": false,
           "colors": null,
-          "dimensions": "32 × 14 cm",
-          "images": [
-            {
-              "url": "/images/products/vase_noir.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Duo de vases minimalistes",
-          "slug": "demo-duo-vases-minimalistes",
-          "shortDescription": "Deux vases assortis aux lignes douces.",
-          "description": "Ensemble décoratif facile à associer avec des pampas ou à exposer seul.",
-          "price": "145",
-          "oldPrice": "170",
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": true,
-          "isOnSale": true,
-          "colors": null,
           "dimensions": null,
           "images": [
             {
-              "url": "/images/categories/decoration.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Vase anneau bicolore blanc et dore",
-          "slug": "vase-anneau-bicolore-blanc-dore",
-          "shortDescription": "Vase decoratif moderne en forme d'anneau.",
-          "description": "Vase anneau au design contemporain, avec une finition blanche et doree. Ideal avec des pampas ou comme objet decoratif sur une table ou une console.",
-          "price": "85",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/vase-anneau-blanc-dore.jpeg",
+              "url": "/uploads/1784925955924-be3b4c43-3f3f-45df-aab1-1c97aff95030.jpg",
               "publicId": null,
               "isMain": true,
               "sortOrder": 0
@@ -172,1197 +117,121 @@
           ],
           "variants": [
             {
-              "name": "Petit",
-              "price": "85",
+              "name": "Grand",
+              "price": "100",
               "oldPrice": null,
-              "stock": 10,
+              "stock": 19,
               "sortOrder": 0
+            },
+            {
+              "name": "Petit",
+              "price": "80",
+              "oldPrice": null,
+              "stock": 81,
+              "sortOrder": 1
             }
           ]
         }
       ]
+    },
+    {
+      "name": "Accessoires de cuisine & rangement",
+      "slug": "accessoires-de-cuisine-et-rangement",
+      "description": "Découvrez notre collection d'accessoires en bambou, verre et bois naturel pour organiser votre cuisine avec élégance. Des pièces pratiques et raffinées qui apportent chaleur et style à votre quotidien.",
+      "imageUrl": "/uploads/1784916014588-abfff8bb-afc0-4151-8e91-3237abeb49a2.jpg",
+      "isVisible": true,
+      "sortOrder": 2,
+      "products": []
+    },
+    {
+      "name": "Rouleaux adhésifs décoratifs",
+      "slug": "rouleaux-adhesifs-decoratifs",
+      "description": "Transformez vos meubles, murs et surfaces en quelques minutes avec nos rouleaux adhésifs effet bois, marbre et textures modernes. Une solution élégante, pratique et économique.",
+      "imageUrl": "/uploads/1784916032846-85573789-f45f-49c4-98a7-3b3b42d0690a.jpg",
+      "isVisible": true,
+      "sortOrder": 3,
+      "products": []
+    },
+    {
+      "name": "Abat-jour",
+      "slug": "bougies-parfums",
+      "description": "Panneaux, horloges et décoration murale en relief.",
+      "imageUrl": "/lookbook/lookbook-04.jpeg",
+      "isVisible": true,
+      "sortOrder": 4,
+      "products": []
     },
     {
       "name": "Cache Tableaux",
       "slug": "tableaux",
       "description": "Tableaux modernes, cadres et compositions murales.",
-      "imageUrl": "/uploads/1784461501897-s2pp9z1zqom.jpg",
+      "imageUrl": "/lookbook/lookbook-02.jpeg",
       "isVisible": true,
-      "sortOrder": 2,
-      "products": [
-        {
-          "name": "Tableau abstrait beige et or",
-          "slug": "demo-tableau-abstrait-beige-or",
-          "shortDescription": "Des tons chaleureux pour une ambiance élégante.",
-          "description": "Tableau décoratif contemporain dans une palette beige, brune et dorée.",
-          "price": "220",
-          "oldPrice": null,
-          "stock": 9,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": "60 × 90 cm",
-          "images": [
-            {
-              "url": "/images/categories/tableaux.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Triptyque lignes modernes",
-          "slug": "demo-triptyque-lignes-modernes",
-          "shortDescription": "Composition de trois cadres coordonnés.",
-          "description": "Un ensemble prêt à structurer le mur du salon, de la chambre ou du bureau.",
-          "price": "350",
-          "oldPrice": "400",
-          "stock": 5,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": false,
-          "isOnSale": true,
-          "colors": null,
-          "dimensions": "3 cadres de 40 × 60 cm",
-          "images": [
-            {
-              "url": "/uploads/1784461501897-s2pp9z1zqom.jpg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Cadre calligraphie contemporaine",
-          "slug": "demo-cadre-calligraphie",
-          "shortDescription": "Une touche artistique sobre et raffinée.",
-          "description": "Cadre moderne inspiré de la calligraphie, proposé en deux formats.",
-          "price": "140",
-          "oldPrice": null,
-          "stock": 12,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/products/piece_moderne.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": [
-            {
-              "name": "40 × 60 cm",
-              "price": "140",
-              "oldPrice": null,
-              "stock": 7,
-              "sortOrder": 0
-            },
-            {
-              "name": "60 × 90 cm",
-              "price": "210",
-              "oldPrice": null,
-              "stock": 5,
-              "sortOrder": 1
-            }
-          ]
-        },
-        {
-          "name": "Cache-tableau electrique en bois Home",
-          "slug": "cache-tableau-electrique-bois-home",
-          "shortDescription": "Cache-tableau en bois avec etageres et crochets porte-cles.",
-          "description": "Une solution decorative et pratique pour dissimuler le tableau electrique dans l'entree ou le salon. Finition effet bois, deux petites etageres et quatre crochets.",
-          "price": "100",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/cache-tableau-electrique-bois-home.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Cache-tableau arbre fleuri blanc et dore",
-          "slug": "cache-tableau-arbre-fleuri-blanc-dore",
-          "shortDescription": "Cache-tableau encadre avec un arbre fleuri blanc et dore.",
-          "description": "Cache-tableau electrique decoratif avec cadre dore et motif arbre fleuri en relief. Il dissimule le coffret tout en habillant le mur avec elegance.",
-          "price": "0",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/cache-tableau-arbre-fleuri-blanc-dore.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Cache-tableau calligraphie doree",
-          "slug": "cache-tableau-calligraphie-doree",
-          "shortDescription": "Cache-tableau noir, blanc et dore avec calligraphie.",
-          "description": "Cache-tableau electrique decoratif avec cadre dore, fond abstrait et calligraphie en relief. Une finition chaleureuse pour le salon ou l'entree.",
-          "price": "0",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/cache-tableau-calligraphie-doree.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Cache-tableau bouquet blanc et dore",
-          "slug": "cache-tableau-bouquet-blanc-dore",
-          "shortDescription": "Cache-tableau avec bouquet blanc et feuillage dore.",
-          "description": "Cache-tableau electrique decoratif avec cadre dore et composition florale blanche et doree. Le panneau masque le coffret electrique tout en apportant une touche lumineuse au mur.",
-          "price": "0",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/cache-tableau-bouquet-blanc-dore.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        }
-      ]
+      "sortOrder": 5,
+      "products": []
+    },
+    {
+      "name": "Chaises",
+      "slug": "accessoires",
+      "description": "Petits objets et accessoires pour personnaliser votre intérieur.",
+      "imageUrl": "/lookbook/lookbook-05.jpeg",
+      "isVisible": true,
+      "sortOrder": 5,
+      "products": []
+    },
+    {
+      "name": "Fleurs & Décoration floral",
+      "slug": "fleurs-et-decoration-floral",
+      "description": "Bouquets décoratifs élégants aux couleurs harmonieuses pour apporter une touche douce, raffinée et chaleureuse à votre intérieur.",
+      "imageUrl": "/uploads/1784903931816-c64eac18-8044-4ca9-8f03-000eb6e121b4.jpg",
+      "isVisible": true,
+      "sortOrder": 5,
+      "products": []
+    },
+    {
+      "name": "Bol",
+      "slug": "bol",
+      "description": null,
+      "imageUrl": "/uploads/1784911147397-8fefc894-5a8f-4348-bda7-cd4926cb128f.jpg",
+      "isVisible": true,
+      "sortOrder": 5,
+      "products": []
     },
     {
       "name": "Les  assiettes",
-      "slug": "miroirs",
-      "description": "Vaisselle et assiettes décoratives aux finitions élégantes.",
-      "imageUrl": "/uploads/1784461569436-wa2cysneq4.jpg",
-      "isVisible": true,
-      "sortOrder": 3,
-      "products": [
-        {
-          "name": "Service de bols en céramique",
-          "slug": "demo-service-bols-ceramique",
-          "shortDescription": "Un service élégant pour vos tables du quotidien.",
-          "description": "Bols décoratifs en céramique aux tons neutres, faciles à associer à votre vaisselle.",
-          "price": "160",
-          "oldPrice": null,
-          "stock": 14,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/products/bols.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Assiettes murales graphiques",
-          "slug": "demo-assiettes-murales-graphiques",
-          "shortDescription": "Un ensemble mural original aux motifs modernes.",
-          "description": "Assiettes décoratives à suspendre pour créer une composition murale unique.",
-          "price": "210",
-          "oldPrice": "240",
-          "stock": 6,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": false,
-          "isOnSale": true,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/categories/assiettes.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Plateau décoratif doré",
-          "slug": "demo-plateau-decoratif-dore",
-          "shortDescription": "Pour bougies, parfums ou petits accessoires.",
-          "description": "Plateau décoratif polyvalent avec finition dorée et fond miroir.",
-          "price": "130",
-          "oldPrice": null,
-          "stock": 11,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/1784461569436-wa2cysneq4.jpg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Coupe marocaine decorative sur pied",
-          "slug": "coupe-marocaine-decorative-sur-pied",
-          "shortDescription": "Coupe blanche aux motifs marocains rouges, verts et dores.",
-          "description": "Coupe decorative sur pied inspiree de l'artisanat marocain. Disponible en trois dimensions: 20 cm a 90 DH, 23 cm a 100 DH et 25 cm a 130 DH.",
-          "price": "90",
-          "oldPrice": null,
-          "stock": 30,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": "20 cm, 23 cm ou 25 cm",
-          "images": [
-            {
-              "url": "/uploads/coupe-marocaine-sur-pied-sans-mesures.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": [
-            {
-              "name": "20 cm",
-              "price": "90",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 0
-            },
-            {
-              "name": "23 cm",
-              "price": "100",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 1
-            },
-            {
-              "name": "25 cm",
-              "price": "130",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 2
-            }
-          ]
-        },
-        {
-          "name": "Presentoir a gateaux 2 etages jaune et dore",
-          "slug": "presentoir-gateaux-2-etages-jaune-dore",
-          "shortDescription": "Presentoir elegant a deux niveaux avec poignee doree.",
-          "description": "Presentoir de service a deux etages, ideal pour les gateaux, petits fours, fruits et gourmandises. Assiettes decorees dans des tons jaune, noir et blanc avec structure doree.",
-          "price": "75",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": "2 etages",
-          "images": [
-            {
-              "url": "/uploads/presentoir-gateaux-2-etages-jaune-dore.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        }
-      ]
-    },
-    {
-      "name": "Pano 3D",
-      "slug": "bougies-parfums",
-      "description": "Panneaux, horloges et décoration murale en relief.",
-      "imageUrl": "/uploads/1784461743143-wx7jfi39l.jpg",
-      "isVisible": true,
-      "sortOrder": 4,
-      "products": [
-        {
-          "name": "Vase décoration noire",
-          "slug": "vase-decoration-noire",
-          "shortDescription": null,
-          "description": "Vase moderne noir pour vos fleurs.",
-          "price": "180",
-          "oldPrice": null,
-          "stock": 21,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/1784399704800-vaffgcybgj.jpg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Horloge murale DIY 3D",
-          "slug": "demo-horloge-murale-diy-3d",
-          "shortDescription": "Une horloge moderne à composer selon votre mur.",
-          "description": "Kit d’horloge murale en relief, facile à installer et disponible en deux diamètres.",
-          "price": "70",
-          "oldPrice": null,
-          "stock": 17,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/products/horloge.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": [
-            {
-              "name": "Diamètre 80 cm",
-              "price": "70",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 0
-            },
-            {
-              "name": "Diamètre 120 cm",
-              "price": "100",
-              "oldPrice": null,
-              "stock": 7,
-              "sortOrder": 1
-            }
-          ]
-        },
-        {
-          "name": "Panneau mural géométrique",
-          "slug": "demo-panneau-mural-geometrique",
-          "shortDescription": "Relief géométrique aux reflets dorés.",
-          "description": "Panneau décoratif 3D pour habiller un mur principal avec caractère.",
-          "price": "260",
-          "oldPrice": "300",
-          "stock": 5,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": false,
-          "isOnSale": true,
-          "colors": null,
-          "dimensions": "70 × 100 cm",
-          "images": [
-            {
-              "url": "/uploads/1784461743143-wx7jfi39l.jpg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Décoration murale feuilles dorées",
-          "slug": "demo-decoration-feuilles-dorees",
-          "shortDescription": "Une composition légère inspirée de la nature.",
-          "description": "Décoration murale métallique parfaite au-dessus d’une console ou d’un canapé.",
-          "price": "195",
-          "oldPrice": null,
-          "stock": 8,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/categories/bougies.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Rouleau de feuillage artificiel mural",
-          "slug": "rouleau-feuillage-artificiel-mural-3x1m",
-          "shortDescription": "Feuillage decoratif en rouleau pour mur, balcon ou terrasse.",
-          "description": "Rouleau de feuillage artificiel vert pour creer rapidement un mur vegetal decoratif. Format complet de 3 metres sur 1 metre.",
-          "price": "100",
-          "oldPrice": null,
-          "stock": 9,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": "3 m x 1 m",
-          "images": [
-            {
-              "url": "/uploads/feuillage-artificiel-rouleau-detail.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            },
-            {
-              "url": "/uploads/feuillage-artificiel-rouleau-vue-complete.jpeg",
-              "publicId": null,
-              "isMain": false,
-              "sortOrder": 1
-            }
-          ],
-          "variants": []
-        }
-      ]
-    },
-    {
-      "name": "Accessoires",
-      "slug": "accessoires",
-      "description": "Petits objets et accessoires pour personnaliser votre intérieur.",
-      "imageUrl": "/uploads/1784461719835-7nq61xmjp2l.jpg",
-      "isVisible": true,
-      "sortOrder": 5,
-      "products": [
-        {
-          "name": "Horloge murale DIY 3D en bois ",
-          "slug": "piece-decorative-moderne",
-          "shortDescription": "Horloge murale moderne avec chiffres 3D",
-          "description": "Horloge murale DIY au design moderne et élégant, idéale pour décorer le salon, la chambre ou le bureau. Les chiffres se fixent directement sur le mur et peuvent être espacés selon vos préférences. Fonctionne avec une pile AA non incluse.",
-          "price": "70",
-          "oldPrice": null,
-          "stock": 0,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/1784462044217-w10qxe27sm.jpg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Jeu d’échecs décoratif",
-          "slug": "demo-jeu-echecs-decoratif",
-          "shortDescription": "Un objet décoratif qui reste entièrement jouable.",
-          "description": "Jeu d’échecs élégant à exposer sur une table basse ou dans une bibliothèque.",
-          "price": "450",
-          "oldPrice": null,
-          "stock": 5,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/products/echecs2.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            },
-            {
-              "url": "/images/products/echecs.png",
-              "publicId": null,
-              "isMain": false,
-              "sortOrder": 1
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Sculpture cerf doré",
-          "slug": "demo-sculpture-cerf-dore",
-          "shortDescription": "Une sculpture lumineuse au style contemporain.",
-          "description": "Cerf décoratif doré pour apporter une note raffinée à votre salon.",
-          "price": "200",
-          "oldPrice": null,
-          "stock": 9,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/products/cerf_dore.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Boîte à mouchoirs décorative dorée et blanche",
-          "slug": "demo-boite-livre-decorative",
-          "shortDescription": "Boîte à mouchoirs élégante au design moderne, idéale pour apporter une touche chic à votre intérieur.",
-          "description": "Boîte de rangement en forme de livre de mode, idéale sur une table basse.",
-          "price": "75",
-          "oldPrice": null,
-          "stock": 20,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/1784488845720-mpt9dm1gpvj.jpg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Lampe de table en ceramique blanche ou marron",
-          "slug": "lampe-table-ceramique-blanche-marron",
-          "shortDescription": "Lampe decorative avec pied en ceramique et abat-jour en tissu.",
-          "description": "Lampe de table chaleureuse avec pied en ceramique et abat-jour texture. Disponible en deux modeles: blanc mouchete et marron avec motif graphique.",
-          "price": "105",
-          "oldPrice": null,
-          "stock": 20,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/lampe-ceramique-blanche-marron.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": [
-            {
-              "name": "Blanche",
-              "price": "105",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 0
-            },
-            {
-              "name": "Marron",
-              "price": "120",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 1
-            }
-          ]
-        },
-        {
-          "name": "Lampe de table effet marbre beige et dore",
-          "slug": "lampe-table-effet-marbre-beige-dore",
-          "shortDescription": "Lampe elegante aux nuances beige et dore avec abat-jour en tissu.",
-          "description": "Lampe de table decorative avec pied effet marbre veine beige, finitions dorees et abat-jour texture. Ideale pour le salon, une console ou une table de chevet.",
-          "price": "120",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/lampe-marbre-beige-dore.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Plateau ovale en bambou",
-          "slug": "plateau-ovale-bambou",
-          "shortDescription": "Petit plateau naturel pour accessoires et flacons.",
-          "description": "Plateau ovale en bambou au style naturel, pratique pour organiser des flacons, parfums ou petits accessoires. Prix pour le plateau seul; les vaporisateurs sont vendus separement.",
-          "price": "15",
-          "oldPrice": null,
-          "stock": 20,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/vaporisateurs-verre-vert-plateau-bambou.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        }
-      ]
-    },
-    {
-      "name": "Chaises & Extérieur",
-      "slug": "chaises-exterieur",
-      "description": "Mobilier pratique pour balcon, terrasse et jardin.",
-      "imageUrl": "/images/categories/chaises.png",
+      "slug": "decoration",
+      "description": "Vases, sculptures et objets décoratifs pour le salon.",
+      "imageUrl": "/uploads/1784896267192-7166cdd3-6a86-4012-a359-2fc1cda5e357.jpg",
       "isVisible": true,
       "sortOrder": 6,
-      "products": [
-        {
-          "name": "Chaise pliante premium",
-          "slug": "demo-chaise-pliante-premium",
-          "shortDescription": "Confortable, élégante et facile à ranger.",
-          "description": "Chaise pliante robuste adaptée au balcon, à la terrasse et aux sorties.",
-          "price": "280",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/products/chaise_pliante.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": [
-            {
-              "name": "Beige",
-              "price": "280",
-              "oldPrice": null,
-              "stock": 6,
-              "sortOrder": 0
-            },
-            {
-              "name": "Noir",
-              "price": "280",
-              "oldPrice": null,
-              "stock": 4,
-              "sortOrder": 1
-            }
-          ]
-        },
-        {
-          "name": "Fauteuil extérieur tressé",
-          "slug": "demo-fauteuil-exterieur-tresse",
-          "shortDescription": "Une assise accueillante pour votre terrasse.",
-          "description": "Fauteuil d’extérieur au style naturel avec structure résistante.",
-          "price": "340",
-          "oldPrice": null,
-          "stock": 7,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/products/chaise.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Chaise de plage enfant Spider-Man",
-          "slug": "chaise-plage-enfant-spiderman",
-          "shortDescription": "Chaise pliante enfant avec parasol rouge assorti.",
-          "description": "Modele Spider-Man pratique pour la plage, le jardin et les sorties en famille. Chaise pliante avec accoudoirs et parasol amovible.",
-          "price": "150",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/chaise-plage-enfant-spiderman.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Chaise de plage enfant Princesses",
-          "slug": "chaise-plage-enfant-princesses",
-          "shortDescription": "Chaise pliante enfant avec parasol violet assorti.",
-          "description": "Modele Princesses pratique pour la plage, le jardin et les sorties en famille. Chaise pliante avec accoudoirs et parasol amovible.",
-          "price": "150",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/chaise-plage-enfant-princesses.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Chaise de plage enfant Pat' Patrouille",
-          "slug": "chaise-plage-enfant-pat-patrouille",
-          "shortDescription": "Chaise pliante enfant avec parasol bleu assorti.",
-          "description": "Modele Pat' Patrouille pratique pour la plage, le jardin et les sorties en famille. Chaise pliante avec accoudoirs et parasol amovible.",
-          "price": "150",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/chaise-plage-enfant-pat-patrouille.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Chaise de plage enfant Hello Kitty",
-          "slug": "chaise-plage-enfant-hello-kitty",
-          "shortDescription": "Chaise pliante enfant avec parasol rose assorti.",
-          "description": "Modele Hello Kitty pratique pour la plage, le jardin et les sorties en famille. Chaise pliante avec accoudoirs et parasol amovible.",
-          "price": "150",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/chaise-plage-enfant-hello-kitty.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Chaise pliante camping avec porte-gobelet",
-          "slug": "chaise-pliante-camping-porte-gobelet",
-          "shortDescription": "Chaise pliante legere avec accoudoirs et porte-gobelet.",
-          "description": "Chaise facile a transporter pour la plage, le camping, le jardin et les sorties. Presentee en bleu, noir, rouge et vert.",
-          "price": "75",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/chaise-pliante-camping-porte-gobelet.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Chaise basse pliante de plage",
-          "slug": "chaise-basse-pliante-plage",
-          "shortDescription": "Chaise basse confortable et facile a transporter.",
-          "description": "Chaise basse pliante avec accoudoirs, ideale pour la plage, la terrasse et les sorties. Disponible en beige et en noir.",
-          "price": "119",
-          "oldPrice": null,
-          "stock": 20,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/chaise-basse-plage-beige-principale.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            },
-            {
-              "url": "/uploads/chaise-basse-plage-beige-noire.jpeg",
-              "publicId": null,
-              "isMain": false,
-              "sortOrder": 1
-            },
-            {
-              "url": "/uploads/chaise-basse-plage-noire.jpeg",
-              "publicId": null,
-              "isMain": false,
-              "sortOrder": 2
-            },
-            {
-              "url": "/uploads/chaise-basse-plage-beige-profil.jpeg",
-              "publicId": null,
-              "isMain": false,
-              "sortOrder": 3
-            }
-          ],
-          "variants": [
-            {
-              "name": "Beige",
-              "price": "119",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 0
-            },
-            {
-              "name": "Noir",
-              "price": "119",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 1
-            }
-          ]
-        },
-        {
-          "name": "Chaise camping pliante dossier haut",
-          "slug": "chaise-camping-pliante-dossier-haut",
-          "shortDescription": "Chaise de camping pliante avec dossier haut et porte-gobelet.",
-          "description": "Chaise pliante legere avec accoudoirs, dossier haut et porte-gobelet. Pratique pour le camping, la plage et le jardin, disponible en vert et en noir.",
-          "price": "119",
-          "oldPrice": null,
-          "stock": 20,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/chaise-camping-dossier-haut-vert-noir.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": [
-            {
-              "name": "Vert",
-              "price": "119",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 0
-            },
-            {
-              "name": "Noir",
-              "price": "119",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 1
-            }
-          ]
-        },
-        {
-          "name": "Chaise camping rembourree Camp Master",
-          "slug": "chaise-camping-rembourree-camp-master",
-          "shortDescription": "Chaise pliante rembourree avec accoudoirs et porte-gobelet.",
-          "description": "Chaise Camp Master confortable avec dossier rembourre, structure pliante, accoudoirs et porte-gobelet. Ideale pour le camping, la plage et le jardin.",
-          "price": "160",
-          "oldPrice": null,
-          "stock": 20,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/uploads/chaise-camping-camp-master-duo.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            },
-            {
-              "url": "/uploads/chaise-camping-camp-master-bleue.jpeg",
-              "publicId": null,
-              "isMain": false,
-              "sortOrder": 1
-            },
-            {
-              "url": "/uploads/chaise-camping-camp-master-bordeaux.jpeg",
-              "publicId": null,
-              "isMain": false,
-              "sortOrder": 2
-            }
-          ],
-          "variants": [
-            {
-              "name": "Bleu",
-              "price": "160",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 0
-            },
-            {
-              "name": "Bordeaux",
-              "price": "160",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 1
-            }
-          ]
-        }
-      ]
+      "products": []
+    },
+    {
+      "name": "Cache dejancteur  ",
+      "slug": "chaises-exterieur",
+      "description": "Mobilier pratique pour balcon, terrasse et jardin.",
+      "imageUrl": "/lookbook/lookbook-06.jpeg",
+      "isVisible": true,
+      "sortOrder": 6,
+      "products": []
     },
     {
       "name": "Rangement",
       "slug": "rangement",
       "description": "Pots, boîtes et solutions de rangement décoratives.",
-      "imageUrl": "/images/categories/bambou.png",
+      "imageUrl": "/lookbook/lookbook-07.jpeg",
       "isVisible": true,
       "sortOrder": 7,
-      "products": [
-        {
-          "name": "Set de pots de rangement",
-          "slug": "demo-set-pots-rangement",
-          "shortDescription": "Trois pots assortis pour une cuisine organisée.",
-          "description": "Pots décoratifs avec couvercles, parfaits pour café, thé et sucre.",
-          "price": "120",
-          "oldPrice": null,
-          "stock": 15,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": false,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/products/pots.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Paniers décoratifs naturels",
-          "slug": "demo-paniers-decoratifs-naturels",
-          "shortDescription": "Rangement pratique avec une texture chaleureuse.",
-          "description": "Paniers polyvalents pour plaids, magazines ou accessoires du quotidien.",
-          "price": "95",
-          "oldPrice": null,
-          "stock": 12,
-          "isVisible": true,
-          "isFeatured": false,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": null,
-          "images": [
-            {
-              "url": "/images/categories/bambou.png",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Lot de 3 bocaux avec cerf dore",
-          "slug": "lot-3-bocaux-cerf-dore",
-          "shortDescription": "Trois bocaux assortis: grand, moyen et petit.",
-          "description": "Lot complet de trois bocaux transparents avec couvercles effet bois et poignees cerf dorees. Comprend une grande, une moyenne et une petite taille.",
-          "price": "70",
-          "oldPrice": null,
-          "stock": 10,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": "Grande + moyenne + petite",
-          "images": [
-            {
-              "url": "/uploads/lot-3-bocaux-cerf-dore.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            }
-          ],
-          "variants": []
-        },
-        {
-          "name": "Chariot de courses pliable a roulettes",
-          "slug": "chariot-courses-pliable-roulettes-97cm",
-          "shortDescription": "Chariot leger avec grand sac et roues silencieuses.",
-          "description": "Chariot de courses pliable avec sac spacieux, poche arriere zippee et roues legeres. Hauteur totale de 97 cm, pratique pour le marche et les courses du quotidien.",
-          "price": "100",
-          "oldPrice": null,
-          "stock": 40,
-          "isVisible": true,
-          "isFeatured": true,
-          "isNew": true,
-          "isOnSale": false,
-          "colors": null,
-          "dimensions": "Hauteur: 97 cm",
-          "images": [
-            {
-              "url": "/uploads/chariot-courses-pliable-couleurs.jpeg",
-              "publicId": null,
-              "isMain": true,
-              "sortOrder": 0
-            },
-            {
-              "url": "/uploads/chariot-courses-pliable-bleu.jpeg",
-              "publicId": null,
-              "isMain": false,
-              "sortOrder": 1
-            },
-            {
-              "url": "/uploads/chariot-courses-pliable-rouge.jpeg",
-              "publicId": null,
-              "isMain": false,
-              "sortOrder": 2
-            }
-          ],
-          "variants": [
-            {
-              "name": "Bleu marine",
-              "price": "100",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 0
-            },
-            {
-              "name": "Bleu royal",
-              "price": "100",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 1
-            },
-            {
-              "name": "Bordeaux",
-              "price": "100",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 2
-            },
-            {
-              "name": "Rouge",
-              "price": "100",
-              "oldPrice": null,
-              "stock": 10,
-              "sortOrder": 3
-            }
-          ]
-        }
-      ]
+      "products": []
+    },
+    {
+      "name": "Boite a Bijoux",
+      "slug": "ba",
+      "description": null,
+      "imageUrl": "/uploads/1784911111230-f79bbf72-8aa5-4600-a5e0-7eecf357a2d7.jpg",
+      "isVisible": true,
+      "sortOrder": 7,
+      "products": []
     }
   ]
 }
