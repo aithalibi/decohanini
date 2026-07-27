@@ -15,7 +15,7 @@
     "db:export-catalog": "node scripts/export-catalog.mjs",
     "db:import-catalog": "node scripts/import-catalog.mjs",
     "seed:demo": "node -r ts-node/register prisma/seed_demo_catalog.ts",
-    "deploy:build": "node scripts/validate-deployment-env.mjs && npm run db:generate && npm run db:migrate && npm run db:bootstrap-admin && npm run db:import-catalog -- --if-empty && next build"
+    "deploy:build": "node scripts/validate-deployment-env.mjs && npm run db:generate && npm run db:migrate && npm run db:bootstrap-admin && npm run db:import-catalog -- --force && next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",

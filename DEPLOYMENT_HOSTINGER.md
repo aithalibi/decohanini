@@ -80,10 +80,10 @@ refuse volontairement les mots de passe faibles et les valeurs d'exemple.
 2. Generation du client Prisma.
 3. Application des fichiers SQL de Prisma avec `mysql2`, sans executable natif incompatible avec Hostinger.
 4. Creation ou mise a jour du compte administrateur defini dans hPanel.
-5. Import du snapshot uniquement si aucun produit n'existe deja.
+5. Import du snapshot local a chaque redeploiement pour remettre a jour les images, textes et prix.
 6. Build Next.js de production.
 
-Les futurs redeploiements ne remplacent donc pas les produits modifies dans l'admin.
+Les futurs redeploiements remplacent donc le catalogue par la version locale du projet.
 
 ## 7. Verification apres deploiement
 
