@@ -77,15 +77,15 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
         </div>
       </div>
 
-      <div className="grid h-[82px] grid-cols-[1fr_auto_1fr] items-center px-4 md:hidden">
+      <div className="grid h-[76px] grid-cols-[1fr_auto_1fr] items-center px-3 sm:px-4 md:hidden">
         <div className="flex items-center justify-self-start">
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
-            className="grid h-10 w-10 place-items-center rounded-full text-brand-espresso transition-colors hover:bg-brand-sand/70"
+            className="grid h-9 w-9 place-items-center rounded-full text-brand-espresso transition-colors hover:bg-brand-sand/70"
             aria-label={t.openMenu}
           >
-            <Menu size={23} strokeWidth={1.7} />
+            <Menu size={21} strokeWidth={1.7} />
           </button>
         </div>
 
@@ -94,11 +94,11 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
         </Link>
 
         <div className="flex items-center justify-self-end">
-          <div className="mr-2 flex items-center rounded-full border border-brand-sand bg-white/85 p-0.5 text-[10px] font-bold uppercase tracking-[0.14em] shadow-[0_8px_20px_rgba(83,58,42,0.05)]">
+          <div className="mr-1.5 flex items-center rounded-full border border-brand-sand bg-white/85 p-0.5 text-[10px] font-bold uppercase tracking-[0.14em] shadow-[0_8px_20px_rgba(83,58,42,0.05)]">
             <button
               type="button"
               onClick={() => setLanguage('FR')}
-              className={`rounded-full px-2.5 py-1.5 transition-colors ${
+              className={`rounded-full px-2.5 py-1 transition-colors ${
                 language === 'FR' ? 'bg-brand-brown text-brand-cream' : 'text-brand-gray-text hover:text-brand-brown'
               }`}
               aria-pressed={language === 'FR'}
@@ -109,7 +109,7 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
             <button
               type="button"
               onClick={() => setLanguage('AR')}
-              className={`rounded-full px-2.5 py-1.5 transition-colors ${
+              className={`rounded-full px-2.5 py-1 transition-colors ${
                 language === 'AR' ? 'bg-brand-brown text-brand-cream' : 'text-brand-gray-text hover:text-brand-brown'
               }`}
               aria-pressed={language === 'AR'}
@@ -121,25 +121,25 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
           <button
             type="button"
             onClick={() => router.push('/boutique')}
-            className="grid h-10 w-10 place-items-center rounded-full text-brand-espresso transition-colors hover:bg-brand-sand/70"
+            className="grid h-9 w-9 place-items-center rounded-full text-brand-espresso transition-colors hover:bg-brand-sand/70"
             aria-label="Rechercher"
           >
-            <Search size={21} strokeWidth={1.7} />
+            <Search size={19} strokeWidth={1.7} />
           </button>
-          <Link href="/favoris" className="relative grid h-10 w-10 place-items-center text-brand-espresso" aria-label={t.favoris}>
+          <Link href="/favoris" className="relative grid h-9 w-9 place-items-center text-brand-espresso" aria-label={t.favoris}>
             <span className="relative">
-              <Heart size={21} strokeWidth={1.7} />
+              <Heart size={19} strokeWidth={1.7} />
               {counter(favoritesCount)}
             </span>
           </Link>
           <button
             type="button"
             onClick={() => toggleCart(true)}
-            className="relative grid h-10 w-10 place-items-center text-brand-espresso"
+            className="relative grid h-9 w-9 place-items-center text-brand-espresso"
             aria-label={t.panier}
           >
             <span className="relative">
-              <ShoppingBag size={21} strokeWidth={1.7} />
+              <ShoppingBag size={19} strokeWidth={1.7} />
               {counter(totalCartCount)}
             </span>
           </button>
@@ -262,15 +262,15 @@ export default function Header({ categories = [] }: { categories?: NavigationCat
           language === 'AR' ? 'right-0' : 'left-0'
         } ${isMobileMenuOpen ? 'translate-x-0' : language === 'AR' ? 'translate-x-full' : '-translate-x-full'}`}
       >
-        <div className="mb-5 flex items-center justify-between border-b border-brand-sand pb-5">
+        <div className="mb-5 flex items-center justify-between border-b border-brand-sand pb-4">
           <Logo compact className="items-start" />
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="grid h-10 w-10 place-items-center rounded-full bg-brand-sand/60 text-brand-espresso"
+            className="grid h-9 w-9 place-items-center rounded-full bg-brand-sand/60 text-brand-espresso"
             aria-label={t.closeMenu}
           >
-            <X size={21} />
+            <X size={19} />
           </button>
         </div>
         <form onSubmit={handleSearch} className="mb-6 flex overflow-hidden rounded-full border border-brand-taupe bg-white/70">

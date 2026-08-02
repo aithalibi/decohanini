@@ -6,7 +6,10 @@ import { getProducts } from '@/actions/products';
 import { getCategories } from '@/actions/categories';
 import { AdminText } from '@/components/admin/AdminI18n';
 
+export const dynamic = 'force-dynamic';
+
 export default async function SitePreviewPage() {
+  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3005';
   const [settings, products, categories] = await Promise.all([
     getSettings(),
     getProducts({ isVisible: true }),
@@ -38,7 +41,7 @@ export default async function SitePreviewPage() {
       <div className="mx-auto max-w-6xl space-y-6">
         <div className="flex justify-end">
           <a
-            href="/"
+            href={publicSiteUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 rounded-xl bg-[#080808] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-neutral-800"

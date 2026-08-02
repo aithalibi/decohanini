@@ -11,7 +11,8 @@ export function getWhatsAppCheckoutUrl(items: CartItem[]): string {
   items.forEach((item) => {
     const itemTotal = (item.variant?.price ?? item.product.price) * item.quantity;
     total += itemTotal;
-    message += `- ${item.product.name}${item.variant ? ` (${item.variant.name})` : ''} × ${item.quantity} : ${itemTotal} DH\n`;
+    const optionLabel = item.variant?.name ?? item.color;
+    message += `- ${item.product.name}${optionLabel ? ` (${optionLabel})` : ''} × ${item.quantity} : ${itemTotal} DH\n`;
   });
   
   message += `\nTotal : ${total} DH\n\n`;

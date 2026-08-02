@@ -11,7 +11,7 @@ import { useLanguageStore } from '@/store/language-store';
 
 interface ProductFormProps {
   action: (prevState: unknown, formData: FormData) => Promise<{ success: boolean; error?: string; id?: number }>;
-  product?: Product & { images: ProductImage[]; variants: ProductVariant[] };
+  product?: Product & { images: ProductImage[]; variants: ProductVariant[]; colors?: unknown };
   categories: Category[];
 }
 
@@ -110,6 +110,25 @@ export default function ProductForm({ action, product, categories }: ProductForm
                   placeholder={isArabic ? 'Ex: 40 x 60 cm' : 'Ex: 40 x 60 cm'}
                   className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
                 />
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-sm font-semibold text-gray-700" htmlFor="prod-colors">
+                  {isArabic ? 'Couleurs disponibles' : 'Couleurs disponibles'} <span className="font-normal text-gray-400">(facultatif)</span>
+                </label>
+                <textarea
+                  id="prod-colors"
+                  name="colors"
+                  rows={3}
+                  defaultValue={Array.isArray(product?.colors) ? product.colors.join(', ') : typeof product?.colors === 'string' ? product.colors : ''}
+                  placeholder={isArabic ? 'Jaune, Rouge, Blanc' : 'Jaune, Rouge, Blanc'}
+                  className="w-full resize-y rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E52329] focus:outline-none"
+                />
+                <p className="mt-1 text-[10px] leading-4 text-gray-500">
+                  {isArabic
+                    ? 'Séparez les couleurs par une virgule. Elles apparaîtront comme choix dans la fiche produit.'
+                    : 'Séparez les couleurs par une virgule. Elles apparaîtront comme choix dans la fiche produit.'}
+                </p>
               </div>
             </div>
           </div>

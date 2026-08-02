@@ -20,36 +20,36 @@ export default function AdminLoginPage() {
   const isArabic = language === 'AR';
   const copy = isArabic ? {
     invalid: 'اسم المستخدم أو كلمة المرور غير صحيحة.',
-    forbidden: 'هذا الحساب لا يملك صلاحيات الإدارة.',
+    forbidden: 'هذا الحساب غير مسموح له بالوصول إلى هذه الصفحة.',
     back: 'العودة إلى المتجر',
-    reserved: 'فضاء خاص',
-    title: 'تسجيل دخول الإدارة',
-    description: 'سجل الدخول لإدارة المنتجات والفئات والصور والطلبات.',
-    username: 'اسم المستخدم',
-    usernamePlaceholder: 'أدخل اسم المستخدم',
+    reserved: 'تسجيل الدخول',
+    title: 'الدخول إلى حسابك',
+    description: '',
+    username: 'البريد الإلكتروني أو اسم المستخدم',
+    usernamePlaceholder: 'أدخل البريد الإلكتروني أو اسم المستخدم',
     password: 'كلمة المرور',
     passwordPlaceholder: 'أدخل كلمة المرور',
     hide: 'إخفاء',
     show: 'إظهار',
     loading: 'جاري تسجيل الدخول...',
     submit: 'تسجيل الدخول',
-    footer: 'إدارة آمنة',
+    footer: 'وصول آمن',
   } : {
     invalid: 'Identifiant ou mot de passe incorrect.',
-    forbidden: 'Ce compte ne possède pas les droits administrateur.',
+    forbidden: 'Ce compte n’est pas autorisé à accéder à cette page.',
     back: 'Retour à la boutique',
-    reserved: 'Espace réservé',
-    title: 'Connexion administrateur',
-    description: 'Connectez-vous pour gérer les produits, catégories, photos et commandes.',
-    username: 'Identifiant',
-    usernamePlaceholder: 'Entrez votre identifiant',
+    reserved: 'Connexion',
+    title: 'Accéder à votre compte',
+    description: '',
+    username: 'E-mail ou identifiant',
+    usernamePlaceholder: 'Entrez votre e-mail ou identifiant',
     password: 'Mot de passe',
     passwordPlaceholder: 'Entrez votre mot de passe',
     hide: 'Masquer',
     show: 'Afficher',
     loading: 'Connexion en cours...',
     submit: 'Se connecter',
-    footer: 'Administration sécurisée',
+    footer: 'Accès sécurisé',
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -75,21 +75,21 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="warm-speckle relative flex min-h-screen items-center justify-center p-4" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'fr'}>
-      <div className="absolute right-4 top-4"><AdminLanguageSwitch /></div>
-      <div className="w-full max-w-md">
-        <div className="mb-8 flex items-center justify-between gap-3">
-          <Link href="/" className="inline-flex items-center rounded-full border border-brand-sand bg-brand-white px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-brand-brown transition-colors hover:bg-brand-sand/70" aria-label={copy.back}>
+    <div className="warm-speckle relative flex min-h-dvh items-start justify-center px-3 py-4 sm:items-center sm:p-4" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'fr'}>
+      <div className="absolute right-3 top-3 sm:right-4 sm:top-4"><AdminLanguageSwitch /></div>
+      <div className="w-full max-w-[440px] pt-14 sm:pt-0">
+        <div className="mb-6 flex flex-col-reverse items-start gap-3 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
+          <Link href="/" className="inline-flex w-full items-center justify-center rounded-full border border-brand-sand bg-brand-white px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-brand-brown transition-colors hover:bg-brand-sand/70 sm:w-auto" aria-label={copy.back}>
             {copy.back}
           </Link>
-          <Link href="/" className="flex justify-center" aria-label={copy.back}>
+          <Link href="/" className="flex w-full justify-center sm:w-auto" aria-label={copy.back}>
             <Logo />
           </Link>
         </div>
-        <div className="rounded-[28px] border border-brand-sand bg-brand-white p-6 shadow-[0_20px_60px_rgba(68,47,35,0.12)] sm:p-8">
+        <div className="rounded-[24px] border border-brand-sand bg-brand-white p-5 shadow-[0_20px_60px_rgba(68,47,35,0.12)] sm:rounded-[28px] sm:p-8">
           <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-caramel">{copy.reserved}</p>
-          <h1 className="mt-2 font-serif text-3xl text-brand-espresso">{copy.title}</h1>
-          <p className="mt-2 text-sm leading-6 text-brand-gray-text">{copy.description}</p>
+          <h1 className="mt-2 font-serif text-2xl leading-tight text-brand-espresso sm:text-3xl">{copy.title}</h1>
+          {copy.description && <p className="mt-2 text-sm leading-6 text-brand-gray-text sm:text-[15px]">{copy.description}</p>}
 
           {error && <div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-700">{error}</div>}
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -107,7 +107,7 @@ export default function AdminLoginPage() {
             </button>
           </form>
         </div>
-        <p className="mt-6 text-center text-[10px] uppercase tracking-[0.12em] text-brand-gray-text">Déco Hanini © 2026 · {copy.footer}</p>
+        <p className="mt-5 text-center text-[10px] uppercase tracking-[0.12em] text-brand-gray-text sm:mt-6">Déco Hanini © 2026 · {copy.footer}</p>
       </div>
     </div>
   );

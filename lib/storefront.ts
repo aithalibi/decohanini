@@ -11,6 +11,7 @@ type StoreProductRecord = {
   isFeatured: boolean;
   isNew: boolean;
   isOnSale: boolean;
+  colors?: unknown;
   category: { name: string; slug: string };
   images: Array<{ url: string }>;
   variants?: Array<{
@@ -24,6 +25,12 @@ type StoreProductRecord = {
 };
 
 export function toStoreProduct(product: StoreProductRecord): Product {
+  const rawColors = Array.isArray(product.colors)
+    ? product.colors
+    : typeof product.colors === 'string'
+      ? product.colors.split(',')
+      : [];
+  const colors = rawColors.filter((color): color is string => typeof color === 'string' && color.trim().length > 0).map((color) => color.trim());
   const variants = product.variants?.map((variant) => ({
     id: String(variant.id),
     name: variant.name,
@@ -55,6 +62,7 @@ export function toStoreProduct(product: StoreProductRecord): Product {
     isOnSale: product.isOnSale,
     shortDescription: product.shortDescription,
     stock: product.stock,
+    colors,
     variants,
   };
 }

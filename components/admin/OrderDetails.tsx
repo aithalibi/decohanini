@@ -87,7 +87,7 @@ export default function OrderDetails({ order }: OrderDetailsProps) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-gray-900">{item.product ? localizeProductName(item.product.slug, item.productName, language) : item.productName}</p>
-                  {item.variantName && <p className="text-xs font-medium text-[#9A6743]">{isArabic ? 'الخيار' : 'Taille'}: {localizeVariantName(item.variantName, language)}</p>}
+                  {item.variantName && <p className="text-xs font-medium text-[#9A6743]">{isArabic ? 'الخيار' : 'Option'}: {localizeVariantName(item.variantName, language)}</p>}
                   <p className="text-sm text-gray-500">{Number(item.unitPrice)} DH x {item.quantity}</p>
                 </div>
                 <div className="text-end">

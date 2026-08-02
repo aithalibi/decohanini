@@ -58,7 +58,7 @@ export default function CustomerRegisterForm({ callbackUrl = '/account' }: { cal
   const loginHref = `/connexion?callbackUrl=${encodeURIComponent(callbackUrl)}`;
 
   return (
-    <form onSubmit={handleSubmit} className="mt-7 space-y-4" dir={isArabic ? 'rtl' : 'ltr'}>
+    <form onSubmit={handleSubmit} className="mt-6 space-y-4 sm:mt-7" dir={isArabic ? 'rtl' : 'ltr'}>
       {error && <p role="alert" className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p>}
       <label className="block"><span className={labelClass}>{t.fullName}</span><span className="relative block"><User size={18} className={iconClass} /><input name="name" type="text" autoComplete="name" required minLength={2} placeholder={t.fullNamePlaceholder} className={fieldClass} /></span></label>
       <label className="block"><span className={labelClass}>{t.email}</span><span className="relative block"><Mail size={18} className={iconClass} /><input name="email" type="email" autoComplete="email" required placeholder={t.emailPlaceholder} className={fieldClass} /></span></label>

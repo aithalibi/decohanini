@@ -15,7 +15,12 @@ const checkoutSchema = z.object({
   items: z.array(z.object({
     productId: z.coerce.number().int().positive(),
     variantId: z.coerce.number().int().positive().optional(),
+    color: z.string().trim().min(1).max(80).optional(),
     quantity: z.coerce.number().int().min(1).max(20),
+    colorSelections: z.array(z.object({
+      color: z.string().trim().min(1).max(80),
+      quantity: z.coerce.number().int().min(1).max(20),
+    })).optional(),
   })).min(1, 'Votre panier est vide.'),
 });
 
@@ -64,6 +69,7 @@ export async function createOrder(_previousState: CheckoutState | null, formData
         name: true,
         price: true,
         stock: true,
+        colors: true,
         variants: { select: { id: true, name: true, price: true, stock: true } },
       },
     });
@@ -73,11 +79,44 @@ export async function createOrder(_previousState: CheckoutState | null, formData
     }
 
     const productById = new Map(products.map((product) => [product.id, product]));
-    const orderItems = parsed.data.items.map((item) => {
+    const expandedItems = parsed.data.items.flatMap((item) => {
+      if (Array.isArray(item.colorSelections) && item.colorSelections.length > 0) {
+        return item.colorSelections.map((selection) => ({
+          productId: item.productId,
+          variantId: item.variantId,
+          color: selection.color,
+          quantity: selection.quantity,
+        }));
+      }
+
+      return [{
+        productId: item.productId,
+        variantId: item.variantId,
+        color: item.color,
+        quantity: item.quantity,
+      }];
+    });
+
+    const orderItems = expandedItems.map((item) => {
       const product = productById.get(item.productId)!;
       const variant = item.variantId ? product.variants.find((entry) => entry.id === item.variantId) : undefined;
+      const availableColorsRaw = Array.isArray(product.colors)
+        ? product.colors
+        : typeof product.colors === 'string'
+          ? product.colors.split(',')
+          : [];
+      const availableColors = availableColorsRaw
+        .filter((entry): entry is string => typeof entry === 'string' && entry.trim().length > 0)
+        .map((entry) => entry.trim());
+      const color = typeof item.color === 'string' ? item.color.trim() : '';
       if (product.variants.length > 0 && !variant) {
         throw new Error(`VARIANT_REQUIRED:${product.name}`);
+      }
+      if (product.variants.length === 0 && availableColors.length > 0 && !color) {
+        throw new Error(`COLOR_REQUIRED:${product.name}`);
+      }
+      if (color && availableColors.length > 0 && !availableColors.includes(color)) {
+        throw new Error(`COLOR_INVALID:${product.name}`);
       }
       const availableStock = variant?.stock ?? product.stock;
       if (availableStock < item.quantity) {
@@ -87,7 +126,7 @@ export async function createOrder(_previousState: CheckoutState | null, formData
         productId: product.id,
         productName: product.name,
         variantId: variant?.id ?? null,
-        variantName: variant?.name ?? null,
+        variantName: (variant?.name ?? color) || null,
         quantity: item.quantity,
         unitPrice: variant?.price ?? product.price,
       };
@@ -152,6 +191,12 @@ export async function createOrder(_previousState: CheckoutState | null, formData
     }
     if (error instanceof Error && error.message.startsWith('VARIANT_REQUIRED:')) {
       return { success: false, error: `Veuillez choisir une taille pour ${error.message.split(':').slice(1).join(':')}.` };
+    }
+    if (error instanceof Error && error.message.startsWith('COLOR_REQUIRED:')) {
+      return { success: false, error: `Veuillez choisir une couleur pour ${error.message.split(':').slice(1).join(':')}.` };
+    }
+    if (error instanceof Error && error.message.startsWith('COLOR_INVALID:')) {
+      return { success: false, error: `La couleur choisie est invalide pour ${error.message.split(':').slice(1).join(':')}.` };
     }
     return { success: false, error: 'La commande n’a pas pu être enregistrée. Veuillez réessayer.' };
   }

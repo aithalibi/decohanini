@@ -37,24 +37,24 @@ export default function CartPage({ isAuthenticated = false }: { isAuthenticated?
   }
 
   return (
-    <section className="container mx-auto px-4 py-10 lg:px-8 lg:py-14">
-      <div className="mb-9 flex items-end justify-between border-b border-brand-sand pb-5">
-        <div><p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-caramel">{copy.selection}</p><h1 className="mt-2 font-serif text-3xl md:text-4xl">{copy.cart}</h1></div>
+    <section className="container mx-auto px-3 py-8 sm:px-4 lg:px-8 lg:py-14">
+      <div className="mb-7 flex flex-col gap-3 border-b border-brand-sand pb-4 sm:mb-9 sm:flex-row sm:items-end sm:justify-between sm:pb-5">
+        <div><p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-caramel">{copy.selection}</p><h1 className="mt-2 font-serif text-2xl md:text-4xl">{copy.cart}</h1></div>
         <span className="text-xs text-brand-gray-text">{items.reduce((sum, item) => sum + item.quantity, 0)} {copy.items}</span>
       </div>
-      <div className="grid gap-6 lg:grid-cols-[1fr_390px] lg:gap-8">
-        <div className="rounded-[24px] border border-brand-sand bg-brand-white px-4 sm:px-6">{items.map((item) => <CartItem key={`${item.product.id}-${item.variant?.id ?? 'simple'}`} item={item} />)}</div>
-        <aside className="h-fit rounded-[24px] bg-brand-beige p-6 lg:sticky lg:top-5">
-          <h2 className="font-serif text-2xl">{copy.summary}</h2>
-          <div className="mt-6 flex justify-between border-b border-brand-taupe/50 pb-5 text-sm"><span>{copy.subtotal}</span><strong>{formatPrice(subtotal)}</strong></div>
-          <div className="flex justify-between border-b border-brand-taupe/50 py-5 text-sm"><span>{copy.delivery}</span><span>{copy.phoneConfirmation}</span></div>
-          <div className="flex justify-between py-6 text-lg"><strong>{copy.total}</strong><strong className="text-brand-brown">{formatPrice(subtotal)}</strong></div>
-          <Link href="/commande" className="flex h-12 items-center justify-center rounded-full bg-brand-espresso text-xs font-bold uppercase tracking-wider text-brand-cream hover:bg-brand-brown">{copy.checkout}</Link>
+      <div className="grid gap-5 lg:grid-cols-[1fr_390px] lg:gap-8">
+        <div className="rounded-[22px] border border-brand-sand bg-brand-white px-3 sm:px-6">{items.map((item) => <CartItem key={`${item.product.id}-${item.variant?.id ?? item.color ?? 'simple'}`} item={item} />)}</div>
+        <aside className="h-fit rounded-[22px] bg-brand-beige p-4 sm:p-6 lg:sticky lg:top-5">
+          <h2 className="font-serif text-xl sm:text-2xl">{copy.summary}</h2>
+          <div className="mt-5 flex justify-between border-b border-brand-taupe/50 pb-4 text-sm"><span>{copy.subtotal}</span><strong>{formatPrice(subtotal)}</strong></div>
+          <div className="flex justify-between border-b border-brand-taupe/50 py-4 text-sm"><span>{copy.delivery}</span><span>{copy.phoneConfirmation}</span></div>
+          <div className="flex justify-between py-5 text-base sm:text-lg"><strong>{copy.total}</strong><strong className="text-brand-brown">{formatPrice(subtotal)}</strong></div>
+          <Link href="/commande" className="flex h-11 items-center justify-center rounded-full bg-brand-espresso text-xs font-bold uppercase tracking-wider text-brand-cream hover:bg-brand-brown">{copy.checkout}</Link>
           {!isAuthenticated && <div className="mt-4 rounded-2xl border border-brand-taupe/60 bg-brand-cream p-4"><p className="flex items-center gap-2 text-xs font-bold text-brand-espresso"><UserRound size={17} className="text-brand-caramel" />{copy.accountRequired}</p><p className="mt-1.5 text-[11px] leading-5 text-brand-gray-text">{copy.accountDesc}</p><div className="mt-3 flex gap-2"><Link href="/connexion?callbackUrl=/commande" className="flex-1 rounded-full border border-brand-brown px-3 py-2 text-center text-[10px] font-bold text-brand-brown">{copy.login}</Link><Link href="/inscription?callbackUrl=/commande" className="flex-1 rounded-full bg-brand-caramel px-3 py-2 text-center text-[10px] font-bold text-white">{copy.register}</Link></div></div>}
-          <div className="mt-5 space-y-3 text-xs text-brand-gray-text"><p className="flex items-center gap-2"><ShieldCheck size={17} className="text-brand-caramel" />{copy.cod}</p><p className="flex items-center gap-2"><Truck size={17} className="text-brand-caramel" />{copy.deliveryMorocco}</p></div>
+          <div className="mt-4 space-y-3 text-xs text-brand-gray-text sm:mt-5"><p className="flex items-center gap-2"><ShieldCheck size={17} className="text-brand-caramel" />{copy.cod}</p><p className="flex items-center gap-2"><Truck size={17} className="text-brand-caramel" />{copy.deliveryMorocco}</p></div>
         </aside>
       </div>
-      <Link href="/boutique" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand-brown hover:text-brand-caramel"><ArrowLeft size={16} />{copy.continue}</Link>
+      <Link href="/boutique" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-brand-brown hover:text-brand-caramel sm:mt-8"><ArrowLeft size={16} />{copy.continue}</Link>
     </section>
   );
 }

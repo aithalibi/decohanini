@@ -54,6 +54,8 @@ export default function ProductCard({
 
   const variants = product.variants ?? [];
   const hasVariants = variants.length > 0;
+  const hasColorOptions = !hasVariants && (product.colors?.length ?? 0) > 0;
+  const requiresOptionChoice = hasVariants || hasColorOptions;
   const isOutOfStock = (product.stock ?? 0) <= 0;
   const isFavorite = isMounted && favorites.includes(product.id);
   const productHref = `/produit/${product.slug}`;
@@ -108,12 +110,12 @@ export default function ProductCard({
     ? t.viewProduct
     : isOutOfStock
       ? (isArabic ? 'غير متوفر' : 'Epuisé')
-      : hasVariants
+      : requiresOptionChoice
         ? (isArabic ? 'اختر الخيارات' : 'Choisir les options')
         : t.addToCart;
 
   const handleAddToCart = () => {
-    if (isPriceOnRequest || hasVariants) {
+    if (isPriceOnRequest || requiresOptionChoice) {
       router.push(productHref);
       return;
     }

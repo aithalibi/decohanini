@@ -9,6 +9,7 @@ import { AdminText } from '@/components/admin/AdminI18n';
 
 export default async function AdminDashboardPage() {
   const stats = await getDashboardStats();
+  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || '/';
 
   const hasAlerts =
     stats.alertProductsNoImage > 0 ||
@@ -119,7 +120,7 @@ export default async function AdminDashboardPage() {
               <span className="text-xs font-bold"><AdminText fr="Voir les commandes" ar="عرض الطلبات" /></span>
             </Link>
             <Link
-              href="/"
+              href={publicSiteUrl}
               target="_blank"
               className="flex flex-col items-center gap-2 p-4 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors text-center"
             >

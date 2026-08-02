@@ -60,6 +60,15 @@ function normalizeVariantImageUrl(imageUrl: string | null | undefined) {
   return trimmed.length > 0 ? trimmed : null;
 }
 
+function parseColors(value: unknown): string[] | undefined {
+  if (typeof value !== 'string') return undefined;
+  const colors = value
+    .split(',')
+    .map((color) => color.trim())
+    .filter((color) => color.length > 0);
+  return colors.length > 0 ? colors : undefined;
+}
+
 export async function getProducts(filters?: {
   categoryId?: number;
   search?: string;
@@ -169,11 +178,12 @@ export async function createProduct(_prevState: unknown, formData: FormData) {
     const normalizedProduct = variants.length > 0
       ? {
           ...parsed.data,
+          colors: parseColors(parsed.data.colors),
           price: Math.min(...variants.map((variant) => variant.price)),
           oldPrice: null,
           stock: variants.reduce((total, variant) => total + variant.stock, 0),
         }
-      : { ...parsed.data, oldPrice: parsed.data.oldPrice ?? null };
+      : { ...parsed.data, colors: parseColors(parsed.data.colors), oldPrice: parsed.data.oldPrice ?? null };
 
     const slug = generateSlug(parsed.data.name);
     const existing = await prisma.product.findUnique({ where: { slug } });
@@ -262,11 +272,12 @@ export async function updateProduct(id: number, _prevState: unknown, formData: F
     const normalizedProduct = variants.length > 0
       ? {
           ...parsed.data,
+          colors: parseColors(parsed.data.colors),
           price: Math.min(...variants.map((variant) => variant.price)),
           oldPrice: null,
           stock: variants.reduce((total, variant) => total + variant.stock, 0),
         }
-      : { ...parsed.data, oldPrice: parsed.data.oldPrice ?? null };
+      : { ...parsed.data, colors: parseColors(parsed.data.colors), oldPrice: parsed.data.oldPrice ?? null };
 
     const imageUrls = getImageUrls(formData);
     const currentProduct = await prisma.product.findUnique({ where: { id }, select: { slug: true } });

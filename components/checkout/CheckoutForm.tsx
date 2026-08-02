@@ -9,6 +9,7 @@ import { createOrder, type CheckoutState } from '@/actions/orders';
 import { useCartStore } from '@/store/cart-store';
 import { useLanguageStore } from '@/store/language-store';
 import { localizeCategoryName, localizeProductName, localizeVariantName } from '@/lib/catalog-i18n';
+import { flattenCartItems } from '@/lib/cart';
 import { formatPrice } from '@/lib/utils';
 
 const initialState: CheckoutState = { success: false };
@@ -46,6 +47,7 @@ export default function CheckoutForm({ defaultName = '' }: { defaultName?: strin
     cashDescription: 'ادفع نقداً عند استلام طلبك. لا نطلب أي بطاقة بنكية على الموقع.',
     yourOrder: 'طلبك',
     size: 'المقاس',
+    color: 'اللون',
     subtotal: 'المجموع الفرعي',
     delivery: 'التوصيل',
     toConfirm: 'يؤكد عبر الهاتف',
@@ -75,6 +77,7 @@ export default function CheckoutForm({ defaultName = '' }: { defaultName?: strin
     cashDescription: 'Payez en espèces à la réception de votre colis. Aucune carte bancaire n’est demandée sur le site.',
     yourOrder: 'Votre commande',
     size: 'Taille',
+    color: 'Couleur',
     subtotal: 'Sous-total',
     delivery: 'Livraison',
     toConfirm: 'À confirmer',
@@ -107,23 +110,28 @@ export default function CheckoutForm({ defaultName = '' }: { defaultName?: strin
     );
   }
 
-  const subtotal = items.reduce((total, item) => total + (item.variant?.price ?? item.product.price) * item.quantity, 0);
-  const serializedItems = JSON.stringify(items.map((item) => ({ productId: Number(item.product.id), variantId: item.variant ? Number(item.variant.id) : undefined, quantity: item.quantity })));
+  const checkoutItems = flattenCartItems(items);
+  const subtotal = checkoutItems.reduce((total, item) => {
+    const sourceItem = items.find((entry) => Number(entry.product.id) === item.productId && Number(entry.variant?.id ?? 0) === Number(item.variantId ?? 0));
+    const unitPrice = sourceItem?.variant?.price ?? sourceItem?.product.price ?? 0;
+    return total + unitPrice * item.quantity;
+  }, 0);
+  const serializedItems = JSON.stringify(checkoutItems);
 
   return (
-    <section dir={isArabic ? 'rtl' : 'ltr'} className="bg-brand-light-gray py-10 lg:py-14">
+    <section dir={isArabic ? 'rtl' : 'ltr'} className="bg-brand-light-gray py-8 sm:py-10 lg:py-14">
       <div className="container mx-auto px-3 sm:px-5 lg:px-8">
-        <div className="mb-8 text-center">
+        <div className="mb-7 text-center sm:mb-8">
           <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand-caramel">{copy.lastStep}</p>
-          <h1 className="mt-2 font-serif text-3xl md:text-4xl">{copy.title}</h1>
+          <h1 className="mt-2 font-serif text-2xl md:text-4xl">{copy.title}</h1>
           <p className="mt-2 text-sm text-brand-gray-text">{copy.paymentNotice}</p>
         </div>
-        <form action={formAction} className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1fr_430px] lg:gap-7">
+        <form action={formAction} className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-[1fr_430px] lg:gap-7">
           <input type="hidden" name="items" value={serializedItems} />
-          <div className="space-y-5">
-            <div className="rounded-[24px] border border-brand-sand bg-brand-white p-5 sm:p-7">
-              <div className="mb-6 flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-caramel text-sm font-bold text-white">1</span><h2 className="font-serif text-xl">{copy.deliveryInfo}</h2></div>
-              <div className="grid gap-5 sm:grid-cols-2">
+          <div className="space-y-4 sm:space-y-5">
+            <div className="rounded-[22px] border border-brand-sand bg-brand-white p-4 sm:p-7">
+              <div className="mb-5 flex items-center gap-3 sm:mb-6"><span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-caramel text-sm font-bold text-white">1</span><h2 className="font-serif text-lg sm:text-xl">{copy.deliveryInfo}</h2></div>
+              <div className="grid gap-4 sm:grid-cols-2">
                 <label className="sm:col-span-2"><span className={labelClass}>{copy.fullName}</span><input name="customerName" required autoComplete="name" defaultValue={defaultName} className={fieldClass} placeholder={copy.fullNamePlaceholder} /></label>
                 <label><span className={labelClass}>{copy.phone}</span><div className="relative"><Phone size={17} className={`absolute top-1/2 -translate-y-1/2 text-brand-caramel ${isArabic ? 'right-4' : 'left-4'}`} /><input name="phone" required type="tel" autoComplete="tel" dir="ltr" className={`${fieldClass} ${isArabic ? 'pr-11 text-right' : 'pl-11'}`} placeholder="06 00 00 00 00" /></div></label>
                 <label><span className={labelClass}>{copy.city}</span><select name="city" required defaultValue="" className={fieldClass}><option value="" disabled>{copy.chooseCity}</option>{cities.map((city) => <option key={city} value={city}>{city === 'Autre ville' ? copy.otherCity : city}</option>)}</select></label>
@@ -131,26 +139,29 @@ export default function CheckoutForm({ defaultName = '' }: { defaultName?: strin
                 <label className="sm:col-span-2"><span className={labelClass}>{copy.note}</span><textarea name="notes" rows={2} className="w-full resize-none rounded-xl border border-brand-sand bg-brand-cream/60 p-4 text-sm outline-none focus:border-brand-caramel" placeholder={copy.notePlaceholder} /></label>
               </div>
             </div>
-            <div className="rounded-[24px] border-2 border-brand-taupe bg-brand-beige p-5 sm:p-7">
+            <div className="rounded-[22px] border-2 border-brand-taupe bg-brand-beige p-4 sm:p-7">
               <div className="flex items-start gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-cream text-brand-caramel"><Banknote size={24} /></span><div><div className="flex items-center gap-2"><h2 className="font-bold">{copy.cashOnDelivery}</h2><CheckCircle2 size={17} className="text-green-700" /></div><p className="mt-1 text-sm leading-6 text-brand-gray-text">{copy.cashDescription}</p></div></div>
             </div>
           </div>
 
-          <aside className="h-fit rounded-[24px] border border-brand-sand bg-brand-white p-5 sm:p-6 lg:sticky lg:top-5">
-            <h2 className="border-b border-brand-sand pb-4 font-serif text-xl">{copy.yourOrder}</h2>
-            <div className="max-h-[310px] space-y-4 overflow-y-auto py-5">
-              {items.map((item) => (
-                <div key={`${item.product.id}-${item.variant?.id ?? 'simple'}`} className="flex gap-3">
-                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-brand-beige">{item.product.image && <Image src={item.product.image} alt={localizeProductName(item.product.slug, item.product.name, language)} fill sizes="64px" className="object-cover" />}<span className="absolute right-0 top-0 flex h-5 min-w-5 items-center justify-center rounded-bl-lg bg-brand-espresso px-1 text-[9px] font-bold text-white">{item.quantity}</span></div>
-                  <div className="min-w-0 flex-1"><p className="line-clamp-2 text-xs font-semibold leading-5">{localizeProductName(item.product.slug, item.product.name, language)}</p><p className="mt-1 text-xs text-brand-gray-text">{item.variant ? `${copy.size}: ${localizeVariantName(item.variant.name, language)}` : localizeCategoryName(item.product.categorySlug, item.product.category, language)}</p></div>
-                  <strong className="shrink-0 text-xs">{formatPrice((item.variant?.price ?? item.product.price) * item.quantity)}</strong>
+          <aside className="h-fit rounded-[22px] border border-brand-sand bg-brand-white p-4 sm:p-6 lg:sticky lg:top-5">
+            <h2 className="border-b border-brand-sand pb-4 font-serif text-lg sm:text-xl">{copy.yourOrder}</h2>
+            <div className="max-h-[280px] space-y-4 overflow-y-auto py-4 sm:max-h-[310px] sm:py-5">
+              {checkoutItems.map((item) => {
+                const sourceItem = items.find((entry) => Number(entry.product.id) === item.productId && Number(entry.variant?.id ?? 0) === Number(item.variantId ?? 0));
+                return (
+                <div key={`${item.productId}-${item.variantId ?? 'simple'}-${item.color ?? 'default'}`} className="flex gap-3">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-brand-beige">{sourceItem?.product.image && <Image src={sourceItem.product.image} alt={localizeProductName(sourceItem.product.slug, sourceItem.product.name, language)} fill sizes="64px" className="object-cover" />}<span className="absolute right-0 top-0 flex h-5 min-w-5 items-center justify-center rounded-bl-lg bg-brand-espresso px-1 text-[9px] font-bold text-white">{item.quantity}</span></div>
+                  <div className="min-w-0 flex-1"><p className="line-clamp-2 text-xs font-semibold leading-5">{sourceItem ? localizeProductName(sourceItem.product.slug, sourceItem.product.name, language) : ''}</p><p className="mt-1 text-xs text-brand-gray-text">{sourceItem?.variant ? `${copy.size}: ${localizeVariantName(sourceItem.variant.name, language)}` : item.color ? `${copy.color}: ${localizeVariantName(item.color, language)}` : sourceItem ? localizeCategoryName(sourceItem.product.categorySlug, sourceItem.product.category, language) : ''}</p></div>
+                  <strong className="shrink-0 text-xs">{formatPrice((sourceItem?.variant?.price ?? sourceItem?.product.price ?? 0) * item.quantity)}</strong>
                 </div>
-              ))}
+                );
+              })}
             </div>
-            <div className="space-y-3 border-y border-brand-sand py-5 text-sm"><div className="flex justify-between"><span>{copy.subtotal}</span><strong>{formatPrice(subtotal)}</strong></div><div className="flex justify-between"><span>{copy.delivery}</span><span className="text-brand-gray-text">{copy.toConfirm}</span></div></div>
-            <div className="flex items-center justify-between py-6 text-lg"><strong>{copy.productsTotal}</strong><strong className="text-brand-brown">{formatPrice(subtotal)}</strong></div>
+            <div className="space-y-3 border-y border-brand-sand py-4 text-sm sm:py-5"><div className="flex justify-between"><span>{copy.subtotal}</span><strong>{formatPrice(subtotal)}</strong></div><div className="flex justify-between"><span>{copy.delivery}</span><span className="text-brand-gray-text">{copy.toConfirm}</span></div></div>
+            <div className="flex items-center justify-between py-5 text-base sm:py-6 sm:text-lg"><strong>{copy.productsTotal}</strong><strong className="text-brand-brown">{formatPrice(subtotal)}</strong></div>
             {state.error && <p role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-xs leading-5 text-red-700">{state.error}</p>}
-            <button type="submit" disabled={isPending} className="flex h-13 w-full items-center justify-center gap-2 rounded-full bg-brand-espresso px-4 text-xs font-bold uppercase tracking-[0.12em] text-brand-cream transition-colors hover:bg-brand-brown disabled:cursor-wait disabled:opacity-60">
+            <button type="submit" disabled={isPending} className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-espresso px-4 text-xs font-bold uppercase tracking-[0.12em] text-brand-cream transition-colors hover:bg-brand-brown disabled:cursor-wait disabled:opacity-60">
               {isPending ? copy.saving : copy.confirm}
             </button>
             <p className="mt-4 flex items-start gap-2 text-[11px] leading-5 text-brand-gray-text"><ShieldCheck size={16} className="mt-0.5 shrink-0 text-green-700" />{copy.confirmationNotice}</p>

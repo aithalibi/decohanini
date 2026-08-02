@@ -23,6 +23,7 @@ export interface Product {
   isOnSale?: boolean;
   shortDescription?: string | null;
   stock?: number;
+  colors?: string[];
   variants?: ProductVariant[];
 }
 
