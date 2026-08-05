@@ -182,9 +182,6 @@ export async function createProduct(_prevState: unknown, formData: FormData) {
     }
 
     const variants = variantsResult.data;
-    const variantImageUrls = variants
-      .map((variant) => normalizeVariantImageUrl(variant.imageUrl))
-      .filter((url): url is string => Boolean(url));
 
     const normalizedProduct = variants.length > 0
       ? {
@@ -220,9 +217,7 @@ export async function createProduct(_prevState: unknown, formData: FormData) {
       },
     });
 
-    const galleryUrls = variants.length > 0
-      ? dedupeUrls([...variantImageUrls, ...imageUrls])
-      : dedupeUrls(imageUrls);
+    const galleryUrls = dedupeUrls(imageUrls);
     if (galleryUrls.length > 0) {
       await prisma.productImage.createMany({
         data: galleryUrls.map((url, index) => ({
@@ -276,9 +271,6 @@ export async function updateProduct(id: number, _prevState: unknown, formData: F
     }
 
     const variants = variantsResult.data;
-    const variantImageUrls = variants
-      .map((variant) => normalizeVariantImageUrl(variant.imageUrl))
-      .filter((url): url is string => Boolean(url));
 
     const normalizedProduct = variants.length > 0
       ? {
@@ -313,9 +305,7 @@ export async function updateProduct(id: number, _prevState: unknown, formData: F
       }
 
       await transaction.productImage.deleteMany({ where: { productId: id } });
-      const galleryUrls = variants.length > 0
-        ? dedupeUrls([...variantImageUrls, ...imageUrls])
-        : dedupeUrls(imageUrls);
+      const galleryUrls = dedupeUrls(imageUrls);
       if (galleryUrls.length > 0) {
         await transaction.productImage.createMany({
           data: galleryUrls.map((url, index) => ({
