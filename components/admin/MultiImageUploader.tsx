@@ -58,9 +58,9 @@ export default function MultiImageUploader({ initialUrls = [] }: { initialUrls?:
           <div key={`${url}-${index}`} className="group relative aspect-square overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
             <img src={url} alt={`Photo ${index + 1}`} className="h-full w-full object-cover" />
             {index === 0 && <span className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-black/75 px-2 py-1 text-[9px] font-bold text-white"><Star size={10} fill="currentColor" />{isArabic ? 'رئيسية' : 'Principale'}</span>}
-            <div className="absolute inset-x-0 bottom-0 flex translate-y-full justify-center gap-2 bg-black/65 p-2 transition-transform group-hover:translate-y-0">
-              {index > 0 && <button type="button" onClick={() => makeMain(index)} className="rounded-lg bg-white p-2 text-gray-700" title={isArabic ? 'تعيين كصورة رئيسية' : 'Définir comme principale'}><Star size={15} /></button>}
-              <button type="button" onClick={() => setUrls((current) => current.filter((_, itemIndex) => itemIndex !== index))} className="rounded-lg bg-red-500 p-2 text-white" title={isArabic ? 'حذف' : 'Supprimer'}><Trash2 size={15} /></button>
+            <div className="absolute inset-x-0 bottom-0 flex justify-between gap-2 bg-black/65 p-2">
+              {index > 0 && <button type="button" onClick={() => makeMain(index)} className="rounded-lg bg-white p-2 text-gray-700" title={isArabic ? 'تعيين كصورة رئيسية' : 'Définir comme principale'} aria-label={isArabic ? 'تعيين كصورة رئيسية' : 'Définir comme principale'}><Star size={15} /></button>}
+              <button type="button" onClick={() => setUrls((current) => current.filter((_, itemIndex) => itemIndex !== index))} className="rounded-lg bg-red-500 p-2 text-white" title={isArabic ? 'حذف' : 'Supprimer'} aria-label={isArabic ? 'حذف' : 'Supprimer'}><Trash2 size={15} /></button>
             </div>
           </div>
         ))}
