@@ -9,7 +9,7 @@ import { AdminText } from '@/components/admin/AdminI18n';
 export const dynamic = 'force-dynamic';
 
 export default async function SitePreviewPage() {
-  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3005';
+  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || '/';
   const [settings, products, categories] = await Promise.all([
     getSettings(),
     getProducts({ isVisible: true }),

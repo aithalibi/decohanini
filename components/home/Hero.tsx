@@ -14,7 +14,7 @@ export default function Hero({ settings, showcaseImages = [] }: HeroProps) {
   const language = useLanguageStore((state) => state.language);
   const isArabic = language === 'AR';
 
-  const mainImage = showcaseImages[0] || settings?.heroImageUrl || '/lookbook/lookbook-02.jpeg';
+  const mainImage = settings?.heroImageUrl || showcaseImages[0] || '/lookbook/lookbook-02.jpeg';
   const eyebrow = isArabic ? 'مجموعة جديدة' : 'Nouvelle collection';
   const title = isArabic
     ? 'أناقة هادئة تضيف حضوراً للمكان'

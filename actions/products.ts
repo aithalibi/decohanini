@@ -21,16 +21,27 @@ function generateSlug(name: string): string {
     .trim();
 }
 
+function dedupeUrls(urls: string[]) {
+  const seen = new Set<string>();
+  return urls.filter((url) => {
+    const trimmed = url.trim();
+    if (!trimmed || seen.has(trimmed)) return false;
+    seen.add(trimmed);
+    return true;
+  });
+}
+
 function getImageUrls(formData: FormData): string[] {
   const value = formData.get('imageUrls');
   if (typeof value === 'string') {
     try {
       const parsed = JSON.parse(value);
       if (Array.isArray(parsed)) {
-        return parsed
-          .filter((url): url is string => typeof url === 'string' && url.trim().length > 0)
-          .map((url) => url.trim())
-          .slice(0, 6);
+        return dedupeUrls(
+          parsed
+            .filter((url): url is string => typeof url === 'string' && url.trim().length > 0)
+            .map((url) => url.trim())
+        ).slice(0, 6);
       }
     } catch {
       // Fallback to the legacy single-image field below.
@@ -123,7 +134,7 @@ export async function getProductById(id: number) {
     where: { id },
     include: {
       category: true,
-      images: { orderBy: { sortOrder: 'asc' } },
+      images: { orderBy: [{ isMain: 'desc' }, { sortOrder: 'asc' }] },
       variants: { orderBy: { sortOrder: 'asc' } },
     },
   });
@@ -210,8 +221,8 @@ export async function createProduct(_prevState: unknown, formData: FormData) {
     });
 
     const galleryUrls = variants.length > 0
-      ? [...variantImageUrls, ...imageUrls]
-      : imageUrls;
+      ? dedupeUrls([...variantImageUrls, ...imageUrls])
+      : dedupeUrls(imageUrls);
     if (galleryUrls.length > 0) {
       await prisma.productImage.createMany({
         data: galleryUrls.map((url, index) => ({
@@ -303,8 +314,8 @@ export async function updateProduct(id: number, _prevState: unknown, formData: F
 
       await transaction.productImage.deleteMany({ where: { productId: id } });
       const galleryUrls = variants.length > 0
-        ? [...variantImageUrls, ...imageUrls]
-        : imageUrls;
+        ? dedupeUrls([...variantImageUrls, ...imageUrls])
+        : dedupeUrls(imageUrls);
       if (galleryUrls.length > 0) {
         await transaction.productImage.createMany({
           data: galleryUrls.map((url, index) => ({
